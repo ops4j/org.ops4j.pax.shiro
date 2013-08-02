@@ -8,6 +8,7 @@
     </parent>
     <artifactId>sample-faces</artifactId>
     <packaging>war</packaging>
+    <name>OPS4J Pax Shiro Faces Sample</name>
 
     <dependencies>
         <dependency>

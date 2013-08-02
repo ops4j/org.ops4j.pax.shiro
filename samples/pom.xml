@@ -8,6 +8,7 @@
   </parent>
   <artifactId>samples</artifactId>
   <packaging>pom</packaging>
+  <name>OPS4J Pax Shiro Samples</name>
   <modules>
       <module>sample-faces</module>
       <module>sample-cdi-web</module>
