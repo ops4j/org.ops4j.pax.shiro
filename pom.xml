@@ -22,7 +22,7 @@
 
     <modules>
         <module>pax-shiro-parent</module>
-
+        <module>pax-shiro-cdi</module>
         <module>pax-shiro-faces</module>
     </modules>
 
