@@ -19,6 +19,7 @@
 package org.ops4j.pax.shiro.faces.tags;
 
 import java.beans.BeanInfo;
+import java.beans.IntrospectionException;
 import java.beans.Introspector;
 import java.beans.PropertyDescriptor;
 import java.io.IOException;
@@ -26,6 +27,7 @@ import java.lang.reflect.Modifier;
 
 import javax.faces.context.FacesContext;
 
+import org.apache.shiro.ShiroException;
 import org.apache.shiro.subject.PrincipalCollection;
 
 /**
@@ -38,7 +40,7 @@ import org.apache.shiro.subject.PrincipalCollection;
  * of the specified property of the principal. If no principal is found or the user is not
  * authenticated, the tag displays nothing unless a {@code defaultValue} is specified.
  * 
- * @since 1.3
+ * @since 0.1.0
  */
 public class PrincipalTag extends SecureComponent {
 
@@ -59,9 +61,8 @@ public class PrincipalTag extends SecureComponent {
      */
     private String defaultValue;
 
-    /*--------------------------------------------
-    |  A C C E S S O R S / M O D I F I E R S    |
-    ============================================*/
+    private Object[] values;
+
     public String getType() {
         return type;
     }
@@ -86,39 +87,30 @@ public class PrincipalTag extends SecureComponent {
         this.defaultValue = defaultValue;
     }
 
-    /*--------------------------------------------
-    |               M E T H O D S               |
-    ============================================*/
     @Override
     protected void doEncodeAll(FacesContext ctx) throws IOException {
         String strValue = null;
 
-        try {
-            if (getSubject() != null) {
-                // Get the principal to print out
-                Object principal;
+        if (getSubject() != null) {
+            // Get the principal to print out
+            Object principal;
 
-                if (type == null) {
-                    principal = getSubject().getPrincipal();
+            if (type == null) {
+                principal = getSubject().getPrincipal();
+            }
+            else {
+                principal = getPrincipalFromClassName();
+            }
+
+            // Get the string value of the principal
+            if (principal != null) {
+                if (property == null) {
+                    strValue = principal.toString();
                 }
                 else {
-                    principal = getPrincipalFromClassName();
-                }
-
-                // Get the string value of the principal
-                if (principal != null) {
-                    if (property == null) {
-                        strValue = principal.toString();
-                    }
-                    else {
-                        strValue = getPrincipalProperty(principal, property);
-                    }
+                    strValue = getPrincipalProperty(principal, property);
                 }
             }
-        }
-        catch (Exception e) {
-            log.error("Error getting principal type [" + type + "], property [" + property + "]: "
-                + e.getMessage(), e);
         }
 
         if (strValue == null) {
@@ -136,42 +128,31 @@ public class PrincipalTag extends SecureComponent {
         }
     }
 
-    @SuppressWarnings({ "unchecked" })
     private Object getPrincipalFromClassName() {
         Object principal = null;
 
         try {
-            Class cls = Class.forName(type);
+            Class<?> cls = Class.forName(type);
             PrincipalCollection principals = getSubject().getPrincipals();
             if (principals != null) {
                 principal = principals.oneByType(cls);
             }
         }
         catch (ClassNotFoundException e) {
-            if (log.isErrorEnabled()) {
-                log.error("Unable to find class for name [" + type + "]");
-            }
-        }
-        catch (Exception e) {
-            if (log.isErrorEnabled()) {
-                log.error(
-                    "Unknown error while getting principal for type [" + type + "]: "
-                        + e.getMessage(), e);
-            }
+            log.error("Unable to find class for name [" + type + "]");
         }
         return principal;
     }
 
-    private String getPrincipalProperty(Object principal, String property) throws IOException {
+    private String getPrincipalProperty(Object principal, String _property) throws IOException {
         String strValue = null;
-
+        boolean foundProperty = false;
         try {
             BeanInfo bi = Introspector.getBeanInfo(principal.getClass());
 
             // Loop through the properties to get the string value of the specified property
-            boolean foundProperty = false;
             for (PropertyDescriptor pd : bi.getPropertyDescriptors()) {
-                if (pd.getName().equals(property)
+                if (pd.getName().equals(_property)
                     && (Modifier.isPublic(pd.getReadMethod().getModifiers()))) {
                     Object value = null;
                     try {
@@ -187,30 +168,21 @@ public class PrincipalTag extends SecureComponent {
                 }
             }
 
-            if (!foundProperty) {
-                final String message = "Property [" + property
-                    + "] not found in principal of type [" + principal.getClass().getName() + "]";
-                if (log.isErrorEnabled()) {
-                    log.error(message);
-                }
-                throw new IOException(message);
-            }
-
         }
-        catch (Exception e) {
-            final String message = "Error reading property [" + property
-                + "] from principal of type [" + principal.getClass().getName() + "]";
-            if (log.isErrorEnabled()) {
-                log.error(message, e);
-            }
+        catch (ReflectiveOperationException exc) {
+            throw new ShiroException(exc);
+        }
+        catch (IntrospectionException exc) {
+            throw new ShiroException(exc);
+        }
+        if (!foundProperty) {
+            final String message = "Property [" + _property + "] not found in principal of type ["
+                + principal.getClass().getName() + "]";
+            log.error(message);
             throw new IOException(message);
         }
-
         return strValue;
     }
-
-    // ----------------------------------------------------- StateHolder Methods
-    private Object[] values;
 
     @Override
     public Object saveState(FacesContext context) {
