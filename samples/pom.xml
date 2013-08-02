@@ -10,5 +10,6 @@
   <packaging>pom</packaging>
   <modules>
       <module>sample-faces</module>
+      <module>sample-cdi-web</module>
   </modules>
 </project>
