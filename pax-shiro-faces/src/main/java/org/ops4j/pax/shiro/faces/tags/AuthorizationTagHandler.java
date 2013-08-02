@@ -25,9 +25,10 @@ import javax.faces.view.facelets.TagAttribute;
 import javax.faces.view.facelets.TagConfig;
 
 /**
- * Tag handler which shows or hides body content based on the current Subject's authorization state.  'Authorization
- * state' means whether or not they have or do not have a role or whether they are permitted to do something or not.
- *
+ * Tag handler which shows or hides body content based on the current Subject's authorization state.
+ * 'Authorization state' means whether or not they have or do not have a role or whether they are
+ * permitted to do something or not.
+ * 
  * @since 1.3
  */
 public abstract class AuthorizationTagHandler extends SecureTagHandler {
@@ -43,19 +44,20 @@ public abstract class AuthorizationTagHandler extends SecureTagHandler {
         String value;
         if (attr.isLiteral()) {
             value = attr.getValue(ctx);
-        } else {
+        }
+        else {
             ValueExpression expression = attr.getValueExpression(ctx, String.class);
             value = (String) expression.getValue(ctx);
         }
         return value;
     }
 
-    @Override 
+    @Override
     protected boolean showTagBody(FaceletContext ctx, UIComponent parent) {
         String value = getAttrValue(ctx, name);
         return showTagBody(value);
     }
-    
+
     protected boolean showTagBody(String nameAttributeValue) {
         return false;
     }

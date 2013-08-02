@@ -28,20 +28,18 @@ import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.realm.AuthenticatingRealm;
 import org.ops4j.pax.shiro.cdi.ShiroIni;
 
-
 /**
  * @author Harald Wellmann
- *
+ * 
  */
 @ShiroIni
 public class DemoRealm extends AuthenticatingRealm {
-    
+
     @Inject
     private UserDao userDao;
 
     @Override
-    protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken token)
-        throws AuthenticationException {
+    protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken token) {
         UsernamePasswordToken upToken = (UsernamePasswordToken) token;
         User user = userDao.findUser(upToken.getUsername());
         if (user == null) {

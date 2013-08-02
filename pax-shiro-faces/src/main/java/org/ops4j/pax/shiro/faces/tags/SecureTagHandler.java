@@ -18,16 +18,15 @@
  */
 package org.ops4j.pax.shiro.faces.tags;
 
-import org.apache.shiro.SecurityUtils;
-import org.apache.shiro.subject.Subject;
+import java.io.IOException;
 
-import javax.el.ELException;
-import javax.faces.FacesException;
 import javax.faces.component.UIComponent;
 import javax.faces.view.facelets.FaceletContext;
 import javax.faces.view.facelets.TagConfig;
 import javax.faces.view.facelets.TagHandler;
-import java.io.IOException;
+
+import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.subject.Subject;
 
 /**
  * Base class for all Shiro TagHandlers
@@ -44,7 +43,7 @@ public abstract class SecureTagHandler extends TagHandler {
         return SecurityUtils.getSubject();
     }
 
-    public void apply(FaceletContext ctx, UIComponent parent) throws IOException, FacesException, ELException {
+    public void apply(FaceletContext ctx, UIComponent parent) throws IOException {
         if (showTagBody(ctx, parent)) {
             this.nextHandler.apply(ctx, parent);
         }
@@ -57,5 +56,4 @@ public abstract class SecureTagHandler extends TagHandler {
     protected boolean showTagBody() {
         return false;
     }
-
 }

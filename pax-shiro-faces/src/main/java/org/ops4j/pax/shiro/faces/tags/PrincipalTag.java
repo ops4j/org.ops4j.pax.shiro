@@ -18,25 +18,26 @@
  */
 package org.ops4j.pax.shiro.faces.tags;
 
-import org.apache.shiro.subject.PrincipalCollection;
-
-import javax.faces.context.FacesContext;
 import java.beans.BeanInfo;
 import java.beans.Introspector;
 import java.beans.PropertyDescriptor;
 import java.io.IOException;
 import java.lang.reflect.Modifier;
 
+import javax.faces.context.FacesContext;
+
+import org.apache.shiro.subject.PrincipalCollection;
+
 /**
- * Tag used to print out the String value of a user's default principal,
- * or a specific principal as specified by the tag's attributes.
+ * Tag used to print out the String value of a user's default principal, or a specific principal as
+ * specified by the tag's attributes.
  * <p/>
- * If no attributes are specified, the tag prints out the {@code toString()} value of the user's default principal.
- * If the {@code type} attribute is specified, the tag looks for a principal with the given type.  If the
- * {@code property} attribute is specified, the tag prints the string value of the specified property of the principal.
- * If no principal is found or the user is not authenticated, the tag displays nothing unless a
- * {@code defaultValue} is specified.
- *
+ * If no attributes are specified, the tag prints out the {@code toString()} value of the user's
+ * default principal. If the {@code type} attribute is specified, the tag looks for a principal with
+ * the given type. If the {@code property} attribute is specified, the tag prints the string value
+ * of the specified property of the principal. If no principal is found or the user is not
+ * authenticated, the tag displays nothing unless a {@code defaultValue} is specified.
+ * 
  * @since 1.3
  */
 public class PrincipalTag extends SecureComponent {
@@ -47,12 +48,14 @@ public class PrincipalTag extends SecureComponent {
     private String type;
 
     /**
-     * The property name to retrieve of the principal, or null if the <tt>toString()</tt> value should be used.
+     * The property name to retrieve of the principal, or null if the <tt>toString()</tt> value
+     * should be used.
      */
     private String property;
 
     /**
-     * The default value that should be displayed if the user is not authenticated, or no principal is found.
+     * The default value that should be displayed if the user is not authenticated, or no principal
+     * is found.
      */
     private String defaultValue;
 
@@ -86,7 +89,6 @@ public class PrincipalTag extends SecureComponent {
     /*--------------------------------------------
     |               M E T H O D S               |
     ============================================*/
-    @SuppressWarnings({"unchecked"})
     @Override
     protected void doEncodeAll(FacesContext ctx) throws IOException {
         String strValue = null;
@@ -98,7 +100,8 @@ public class PrincipalTag extends SecureComponent {
 
                 if (type == null) {
                     principal = getSubject().getPrincipal();
-                } else {
+                }
+                else {
                     principal = getPrincipalFromClassName();
                 }
 
@@ -106,13 +109,16 @@ public class PrincipalTag extends SecureComponent {
                 if (principal != null) {
                     if (property == null) {
                         strValue = principal.toString();
-                    } else {
+                    }
+                    else {
                         strValue = getPrincipalProperty(principal, property);
                     }
                 }
             }
-        } catch (Exception e) {
-            log.error("Error getting principal type [" + type + "], property [" + property + "]: " + e.getMessage(), e);
+        }
+        catch (Exception e) {
+            log.error("Error getting principal type [" + type + "], property [" + property + "]: "
+                + e.getMessage(), e);
         }
 
         if (strValue == null) {
@@ -123,13 +129,14 @@ public class PrincipalTag extends SecureComponent {
         if (strValue != null) {
             try {
                 ctx.getResponseWriter().write(strValue);
-            } catch (IOException e) {
+            }
+            catch (IOException e) {
                 throw new IOException("Error writing [" + strValue + "] to output.");
             }
         }
     }
 
-    @SuppressWarnings({"unchecked"})
+    @SuppressWarnings({ "unchecked" })
     private Object getPrincipalFromClassName() {
         Object principal = null;
 
@@ -139,13 +146,17 @@ public class PrincipalTag extends SecureComponent {
             if (principals != null) {
                 principal = principals.oneByType(cls);
             }
-        } catch (ClassNotFoundException e) {
+        }
+        catch (ClassNotFoundException e) {
             if (log.isErrorEnabled()) {
                 log.error("Unable to find class for name [" + type + "]");
             }
-        } catch (Exception e) {
+        }
+        catch (Exception e) {
             if (log.isErrorEnabled()) {
-                log.error("Unknown error while getting principal for type [" + type + "]: " + e.getMessage(), e);
+                log.error(
+                    "Unknown error while getting principal for type [" + type + "]: "
+                        + e.getMessage(), e);
             }
         }
         return principal;
@@ -160,12 +171,14 @@ public class PrincipalTag extends SecureComponent {
             // Loop through the properties to get the string value of the specified property
             boolean foundProperty = false;
             for (PropertyDescriptor pd : bi.getPropertyDescriptors()) {
-                if (pd.getName().equals(property) && (Modifier.isPublic(pd.getReadMethod().getModifiers()))) {
+                if (pd.getName().equals(property)
+                    && (Modifier.isPublic(pd.getReadMethod().getModifiers()))) {
                     Object value = null;
                     try {
                         pd.getReadMethod().setAccessible(true);
                         value = pd.getReadMethod().invoke(principal, (Object[]) null);
-                    } finally {
+                    }
+                    finally {
                         pd.getReadMethod().setAccessible(false);
                     }
                     strValue = String.valueOf(value);
@@ -175,15 +188,18 @@ public class PrincipalTag extends SecureComponent {
             }
 
             if (!foundProperty) {
-                final String message = "Property [" + property + "] not found in principal of type [" + principal.getClass().getName() + "]";
+                final String message = "Property [" + property
+                    + "] not found in principal of type [" + principal.getClass().getName() + "]";
                 if (log.isErrorEnabled()) {
                     log.error(message);
                 }
                 throw new IOException(message);
             }
 
-        } catch (Exception e) {
-            final String message = "Error reading property [" + property + "] from principal of type [" + principal.getClass().getName() + "]";
+        }
+        catch (Exception e) {
+            final String message = "Error reading property [" + property
+                + "] from principal of type [" + principal.getClass().getName() + "]";
             if (log.isErrorEnabled()) {
                 log.error(message, e);
             }

@@ -36,10 +36,10 @@ import org.ops4j.pax.shiro.cdi.ShiroIni;
 @Stateless
 public class UserDao {
     
+    private static Map<String, User> users = new HashMap<String, User>();
+    
     @Inject @ShiroIni
     private PasswordService passwordService;
-    
-    private static Map<String, User> users = new HashMap<String, User>();
     
     static {
         DefaultPasswordService passwordService = new DefaultPasswordService();
@@ -57,5 +57,4 @@ public class UserDao {
     public User findUser(String username) {
         return users.get(username);
     }
-
 }

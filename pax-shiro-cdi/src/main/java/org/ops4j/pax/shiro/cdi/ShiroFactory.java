@@ -17,23 +17,26 @@
 
 package org.ops4j.pax.shiro.cdi;
 
-import org.apache.shiro.mgt.SecurityManager;
-import org.apache.shiro.session.Session;
-import org.apache.shiro.subject.Subject;
+import static org.apache.shiro.SecurityUtils.getSecurityManager;
+import static org.apache.shiro.SecurityUtils.getSubject;
 
-import javax.enterprise.context.ApplicationScoped;
-import javax.enterprise.inject.Produces;
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.lang.reflect.Proxy;
-import java.lang.reflect.UndeclaredThrowableException;
 
-import static org.apache.shiro.SecurityUtils.getSecurityManager;
-import static org.apache.shiro.SecurityUtils.getSubject;
+import javax.enterprise.context.ApplicationScoped;
+import javax.enterprise.inject.Produces;
+
+import org.apache.shiro.ShiroException;
+import org.apache.shiro.UnavailableSecurityManagerException;
+import org.apache.shiro.mgt.SecurityManager;
+import org.apache.shiro.session.Session;
+import org.apache.shiro.subject.Subject;
 
 @ApplicationScoped
 public class ShiroFactory {
+
     @Produces
     public Subject subject() {
         return proxy(Subject.class, new SubjectInvocationhandler());
@@ -49,38 +52,75 @@ public class ShiroFactory {
         return proxy(Session.class, new SessionInvocationhandler());
     }
 
+    @SuppressWarnings("unchecked")
     private <T> T proxy(final Class<T> clazz, final InvocationHandler ih) {
-        return (T) Proxy.newProxyInstance(getClass().getClassLoader(), new Class<?>[]{ clazz }, ih);
+        return (T) Proxy
+            .newProxyInstance(getClass().getClassLoader(), new Class<?>[] { clazz }, ih);
     }
 
     private static class SubjectInvocationhandler extends Handler {
-        public Object handlerInvoke(final Object proxy, final Method method, final Object[] args) throws Throwable {
-            return method.invoke(getSubject(), args);
+
+        public Object handlerInvoke(final Object proxy, final Method method, final Object[] args) {
+            try {
+                return method.invoke(getSubject(), args);
+            }
+            catch (IllegalAccessException exc) {
+                throw new ShiroException(exc);
+            }
+            catch (IllegalArgumentException exc) {
+                throw new ShiroException(exc);
+            }
+            catch (InvocationTargetException exc) {
+                throw new ShiroException(exc);
+            }
         }
     }
 
     private class SecurityManagerInvocationhandler extends Handler {
-        public Object handlerInvoke(Object proxy, Method method, Object[] args) throws Throwable {
-            return method.invoke(getSecurityManager(), args);
+
+        public Object handlerInvoke(Object proxy, Method method, Object[] args) {
+            try {
+                return method.invoke(getSecurityManager(), args);
+            }
+            catch (UnavailableSecurityManagerException exc) {
+                throw new ShiroException(exc);
+            }
+            catch (IllegalAccessException exc) {
+                throw new ShiroException(exc);
+            }
+            catch (IllegalArgumentException exc) {
+                throw new ShiroException(exc);
+            }
+            catch (InvocationTargetException exc) {
+                throw new ShiroException(exc.getCause());
+            }
         }
     }
 
     private class SessionInvocationhandler extends Handler {
-        public Object handlerInvoke(Object proxy, Method method, Object[] args) throws Throwable {
-            return method.invoke(getSubject().getSession(), args);
-        }
-    }
 
-    private static abstract class Handler implements InvocationHandler {
-        public abstract Object handlerInvoke(Object proxy, Method method, Object[] args) throws Throwable;
-
-        public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
+        public Object handlerInvoke(Object proxy, Method method, Object[] args) {
             try {
-                return handlerInvoke(proxy, method, args);
-            } catch (InvocationTargetException ite) {
-                throw ite.getTargetException();
+                return method.invoke(getSubject().getSession(), args);
+            }
+            catch (IllegalAccessException exc) {
+                throw new ShiroException(exc);
+            }
+            catch (IllegalArgumentException exc) {
+                throw new ShiroException(exc);
+            }
+            catch (InvocationTargetException exc) {
+                throw new ShiroException(exc.getCause());
             }
         }
     }
-}
 
+    private abstract static class Handler implements InvocationHandler {
+
+        public abstract Object handlerInvoke(Object proxy, Method method, Object[] args);
+
+        public Object invoke(Object proxy, Method method, Object[] args) {
+            return handlerInvoke(proxy, method, args);
+        }
+    }
+}

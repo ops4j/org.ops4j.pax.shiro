@@ -48,7 +48,8 @@ public class ShiroInterceptor extends AnnotationsAuthorizingMethodInterceptor {
             context = ctx;
         }
 
-        public Object proceed() throws Throwable {
+        // CHECKSTYLE:SKIP - interceptor API
+        public Object proceed() throws Exception  {
             return context.proceed();
         }
 

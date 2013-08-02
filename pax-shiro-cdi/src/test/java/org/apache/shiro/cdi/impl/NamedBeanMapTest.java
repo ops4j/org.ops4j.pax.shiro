@@ -17,6 +17,7 @@
 
 package org.apache.shiro.cdi.impl;
 
+import static org.hamcrest.CoreMatchers.hasItems;
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
 
@@ -31,7 +32,6 @@ import org.apache.webbeans.cditest.CdiTestContainerLoader;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import org.junit.matchers.JUnitMatchers;
 import org.ops4j.pax.shiro.cdi.impl.NamedBeanMap;
 
 public class NamedBeanMapTest {
@@ -69,6 +69,6 @@ public class NamedBeanMapTest {
             }
         }
         assertThat(origins.size(), is(3));
-        assertThat(origins, JUnitMatchers.hasItems("Germany", "India", "Italy"));
+        assertThat(origins, hasItems("Germany", "India", "Italy"));
     }
 }

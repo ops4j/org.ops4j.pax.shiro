@@ -36,6 +36,11 @@ import javax.naming.NamingException;
 public class BeanManagerProvider {
 
     private static BeanManager beanManager;
+    
+
+    /** Hidden constructor. */
+    private BeanManagerProvider() {
+    }
 
     /**
      * Looks up the current bean manager in JNDI, or returns the value set by
