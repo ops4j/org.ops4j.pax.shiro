@@ -29,7 +29,7 @@ Run Build:
 
 Releases go to Maven Central.
 
-Pax Carrot is currently incubating. There is no release yet.
+Pax Shiro is currently incubating. There is no release yet.
 
 ## Issue Tracking
 
