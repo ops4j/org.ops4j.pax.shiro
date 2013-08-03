@@ -15,7 +15,7 @@
  *   limitations under the License.
  */
 
-package org.apache.shiro.cdi;
+package org.ops4j.pax.shiro.cdi;
 
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authz.Permission;

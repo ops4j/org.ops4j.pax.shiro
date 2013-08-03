@@ -15,7 +15,7 @@
  *   limitations under the License.
  */
 
-package org.apache.shiro.cdi.impl;
+package org.ops4j.pax.shiro.cdi.impl;
 
 import static org.hamcrest.CoreMatchers.hasItems;
 import static org.hamcrest.CoreMatchers.is;

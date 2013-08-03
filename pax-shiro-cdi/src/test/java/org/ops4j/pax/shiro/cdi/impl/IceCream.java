@@ -16,7 +16,7 @@
  * limitations under the License.
  */
 
-package org.apache.shiro.cdi.impl;
+package org.ops4j.pax.shiro.cdi.impl;
 
 import javax.enterprise.context.ApplicationScoped;
 

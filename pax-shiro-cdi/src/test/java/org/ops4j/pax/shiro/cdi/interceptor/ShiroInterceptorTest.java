@@ -15,7 +15,7 @@
  *   limitations under the License.
  */
 
-package org.apache.shiro.cdi.interceptor;
+package org.ops4j.pax.shiro.cdi.interceptor;
 
 import static org.junit.Assert.assertEquals;
 
@@ -26,7 +26,6 @@ import org.apache.shiro.authz.annotation.RequiresGuest;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.apache.shiro.authz.annotation.RequiresRoles;
 import org.apache.shiro.authz.annotation.RequiresUser;
-import org.apache.shiro.cdi.CDITest;
 import org.apache.shiro.subject.PrincipalCollection;
 import org.apache.shiro.subject.SimplePrincipalCollection;
 import org.apache.shiro.subject.Subject;
@@ -37,6 +36,7 @@ import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
+import org.ops4j.pax.shiro.cdi.CDITest;
 import org.ops4j.pax.shiro.cdi.ShiroSecured;
 
 public class ShiroInterceptorTest extends CDITest {

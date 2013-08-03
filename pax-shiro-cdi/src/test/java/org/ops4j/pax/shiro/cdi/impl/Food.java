@@ -16,23 +16,17 @@
  * specific language governing permissions and limitations
  * under the License.
  */
-package org.apache.shiro.cdi.impl;
-
-import org.ops4j.pax.shiro.cdi.ShiroIni;
+package org.ops4j.pax.shiro.cdi.impl;
 
 
 /**
  * @author Harald Wellmann
- * 
+ *
  */
-@ShiroIni
-public class Curry implements Food {
+public interface Food {
+    
+    String getFlavour();
+    
+    String getOrigin();
 
-    public String getFlavour() {
-        return "hot";
-    }
-
-    public String getOrigin() {
-        return "India";
-    }
 }
