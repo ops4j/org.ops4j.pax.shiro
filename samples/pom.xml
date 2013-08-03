@@ -12,5 +12,6 @@
   <modules>
       <module>sample-faces</module>
       <module>sample-cdi-web</module>
+      <module>sample-jsp-bundle</module>
   </modules>
 </project>
