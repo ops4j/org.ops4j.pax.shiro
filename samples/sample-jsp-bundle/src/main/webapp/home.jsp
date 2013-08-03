@@ -35,8 +35,8 @@
 <p>Welcome to the Apache Shiro Quickstart sample application.
     This page represents the home page of any web application.</p>
 
-<shiro:user><p>Visit your <a href="<c:url value="/account"/>">account page</a>.</p></shiro:user>
-<shiro:guest><p>If you want to access the user-only <a href="<c:url value="/account"/>">account page</a>,
+<shiro:user><p>Visit your <a href="<c:url value="/account/"/>">account page</a>.</p></shiro:user>
+<shiro:guest><p>If you want to access the user-only <a href="<c:url value="/account/"/>">account page</a>,
     you will need to log-in first.</p></shiro:guest>
 
 <h2>Roles</h2>

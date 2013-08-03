@@ -26,6 +26,7 @@
         <module>pax-shiro-cdi-web</module>
         <module>pax-shiro-faces</module>
         <module>samples</module>
+        <module>itest</module>
     </modules>
 
     <licenses>

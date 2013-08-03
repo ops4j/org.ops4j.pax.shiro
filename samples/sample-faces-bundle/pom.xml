@@ -11,7 +11,7 @@
     <artifactId>sample-faces-bundle</artifactId>
     <packaging>bundle</packaging>
 
-    <name>OPS4J Pax Shiro Faces Sample Bundle</name>
+    <name>OPS4J Pax Shiro Faces Web Bundle Sample</name>
 
     <properties>
       <bundle.namespace.suffix>sample.faces</bundle.namespace.suffix>
