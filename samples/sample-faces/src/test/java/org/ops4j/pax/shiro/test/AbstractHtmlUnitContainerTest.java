@@ -27,26 +27,23 @@ import org.eclipse.jetty.server.Connector;
 import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.server.nio.SelectChannelConnector;
 import org.eclipse.jetty.webapp.WebAppContext;
-import org.junit.Before;
 import org.junit.BeforeClass;
 
-import com.gargoylesoftware.htmlunit.WebClient;
+public abstract class AbstractHtmlUnitContainerTest {
 
-public abstract class AbstractContainerTest {
     public static final int MAX_PORT = 9200;
 
     protected static PauseableServer server;
 
     private static int port = 9180;
 
-    protected final WebClient webClient = new WebClient();
-
     @BeforeClass
     public static void startContainer() throws Exception {
         while (server == null && port < MAX_PORT) {
             try {
                 server = createAndStartServer(port);
-            } catch (BindException e) {
+            }
+            catch (BindException e) {
                 System.err.printf("Unable to listen on port %d.  Trying next port.", port);
                 port++;
             }
@@ -58,9 +55,10 @@ public abstract class AbstractContainerTest {
         PauseableServer server = new PauseableServer();
         Connector connector = new SelectChannelConnector();
         connector.setPort(port);
-        server.setConnectors(new Connector[]{connector});
+        server.setConnectors(new Connector[] { connector });
         WebAppContext webAppContext = new WebAppContext("src/main/webapp", "/");
-        webAppContext.setOverrideDescriptors(Arrays.asList("src/main/jetty/override-myfaces-web.xml"));
+        webAppContext.setOverrideDescriptors(Arrays
+            .asList("src/main/jetty/override-myfaces-web.xml"));
         server.setHandler(webAppContext);
         server.start();
         return server;
@@ -70,23 +68,27 @@ public abstract class AbstractContainerTest {
         return "http://localhost:" + port + "/";
     }
 
-    @Before
-    public void beforeTest() {
-        webClient.setThrowExceptionOnFailingStatusCode(true);
-    }
-
     public void pauseServer(boolean paused) {
-        if (server != null) server.pause(paused);
+        if (server != null)
+            server.pause(paused);
     }
 
     public static class PauseableServer extends Server {
+
         public synchronized void pause(boolean paused) {
             try {
-                if (paused) for (Connector connector : getConnectors())
-                    connector.stop();
-                else for (Connector connector : getConnectors())
-                    connector.start();
-            } catch (Exception e) {
+                if (paused) {
+                    for (Connector connector : getConnectors()) {
+                        connector.stop();
+                    }
+                }
+                else {
+                    for (Connector connector : getConnectors()) {
+                        connector.start();
+                    }
+                }
+            }
+            catch (Exception e) {
             }
         }
     }
