@@ -19,6 +19,8 @@ package org.ops4j.pax.shiro.cdi.interceptor;
 
 import static org.junit.Assert.assertEquals;
 
+import javax.inject.Inject;
+
 import org.apache.shiro.authz.UnauthenticatedException;
 import org.apache.shiro.authz.UnauthorizedException;
 import org.apache.shiro.authz.annotation.RequiresAuthentication;
@@ -32,25 +34,21 @@ import org.apache.shiro.subject.Subject;
 import org.apache.shiro.subject.support.SubjectThreadState;
 import org.apache.shiro.util.ThreadState;
 import org.junit.After;
-import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
-import org.ops4j.pax.shiro.cdi.CDITest;
+import org.ops4j.pax.shiro.cdi.AbstractCdiTest;
 import org.ops4j.pax.shiro.cdi.ShiroSecured;
 
-public class ShiroInterceptorTest extends CDITest {
+public class ShiroInterceptorTest extends AbstractCdiTest {
     
     @Rule
     public ExpectedException thrown = ExpectedException.none();
     
+    @Inject
     private SecuredService service;
+    
     private ThreadState threadState;
-
-    @Before
-    public void initService() {
-        service = bean(SecuredService.class);
-    }
 
     @After
     public void clearSubject() {

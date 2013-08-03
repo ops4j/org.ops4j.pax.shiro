@@ -26,37 +26,20 @@ import java.util.List;
 import java.util.Map;
 
 import javax.enterprise.inject.spi.BeanManager;
+import javax.inject.Inject;
 
-import org.apache.webbeans.cditest.CdiTestContainer;
-import org.apache.webbeans.cditest.CdiTestContainerLoader;
-import org.junit.AfterClass;
-import org.junit.BeforeClass;
 import org.junit.Test;
-import org.ops4j.pax.shiro.cdi.impl.NamedBeanMap;
+import org.junit.runner.RunWith;
+import org.ops4j.pax.exam.junit.PaxExam;
 
+@RunWith(PaxExam.class)
 public class NamedBeanMapTest {
-    private static CdiTestContainer container;
-
-    @BeforeClass
-    public static void start() throws Exception {
-        container = CdiTestContainerLoader.getCdiContainer();
-        container.bootContainer();
-        container.startContexts();
-    }
-
-    @AfterClass
-    public static void close() throws Exception {
-        container.stopContexts();
-        container.shutdownContainer();
-    }
-
-    protected static <T> T bean(Class<T> clazz) {
-        return container.getInstance(clazz);
-    }
     
+    @Inject
+    private BeanManager beanManager;
+
     @Test
     public void findNamedBeans() {
-        BeanManager beanManager = container.getBeanManager();
         NamedBeanMap namedBeanMap = new NamedBeanMap(beanManager);
         assertThat(namedBeanMap.isEmpty(), is(false));
         

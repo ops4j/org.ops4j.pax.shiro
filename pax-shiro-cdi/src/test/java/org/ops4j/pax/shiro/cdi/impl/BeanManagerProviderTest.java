@@ -22,31 +22,20 @@ import static org.hamcrest.CoreMatchers.sameInstance;
 import static org.junit.Assert.assertThat;
 
 import javax.enterprise.inject.spi.BeanManager;
+import javax.inject.Inject;
 
-import org.apache.webbeans.cditest.CdiTestContainer;
-import org.apache.webbeans.cditest.CdiTestContainerLoader;
-import org.junit.AfterClass;
-import org.junit.BeforeClass;
 import org.junit.Test;
-import org.ops4j.pax.shiro.cdi.impl.BeanManagerProvider;
+import org.junit.runner.RunWith;
+import org.ops4j.pax.exam.junit.PaxExam;
 
+@RunWith(PaxExam.class)
 public class BeanManagerProviderTest {
-    private static CdiTestContainer container;
 
-    @BeforeClass
-    public static void start() throws Exception {
-        container = CdiTestContainerLoader.getCdiContainer();
-        container.bootContainer();
-    }
-
-    @AfterClass
-    public static void close() throws Exception {
-        container.shutdownContainer();
-    }
+    @Inject
+    private BeanManager beanManager;
 
     @Test
     public void findBeanManagerWithoutJndi() {
-        BeanManager beanManager = container.getBeanManager();
         BeanManagerProvider.setBeanManager(beanManager);
         assertThat(BeanManagerProvider.getBeanManager(), is(sameInstance(beanManager)));
     }

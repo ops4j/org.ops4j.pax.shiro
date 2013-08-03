@@ -17,33 +17,32 @@
 
 package org.ops4j.pax.shiro.cdi;
 
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.Collections;
+
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authz.Permission;
 import org.apache.shiro.authz.permission.RolePermissionResolver;
 import org.apache.shiro.authz.permission.WildcardPermission;
 import org.apache.shiro.mgt.DefaultSecurityManager;
 import org.apache.shiro.realm.SimpleAccountRealm;
-import org.apache.webbeans.cditest.CdiTestContainer;
-import org.apache.webbeans.cditest.CdiTestContainerLoader;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
+import org.junit.runner.RunWith;
+import org.ops4j.pax.exam.junit.PaxExam;
 
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.Collections;
-
-public abstract class CDITest {
-    private static CdiTestContainer container;
-    protected static DefaultSecurityManager securityManager;
+@RunWith(PaxExam.class)
+public abstract class AbstractCdiTest  {
+    
     protected static SimpleAccountRealm realm;
+    protected static DefaultSecurityManager securityManager;
 
     @BeforeClass
     public static void start() throws Exception {
         securityManager = new DefaultSecurityManager();
         SecurityUtils.setSecurityManager(securityManager);
 
-        container = CdiTestContainerLoader.getCdiContainer();
-        container.bootContainer();
 
         realm = new SimpleAccountRealm("test-realm");
         realm.addRole("role");
@@ -63,11 +62,6 @@ public abstract class CDITest {
 
     @AfterClass
     public static void close() throws Exception {
-        container.shutdownContainer();
         SecurityUtils.setSecurityManager(null);
-    }
-
-    protected static <T> T bean(Class<T> clazz) {
-        return container.getInstance(clazz);
-    }
+    }    
 }
