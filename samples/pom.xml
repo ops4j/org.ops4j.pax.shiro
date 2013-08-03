@@ -10,8 +10,9 @@
   <packaging>pom</packaging>
   <name>OPS4J Pax Shiro Samples</name>
   <modules>
-      <module>sample-faces</module>
       <module>sample-cdi-web</module>
+      <module>sample-faces</module>
+      <module>sample-faces-bundle</module>
       <module>sample-jsp-bundle</module>
   </modules>
 </project>
