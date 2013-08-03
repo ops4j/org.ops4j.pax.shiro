@@ -44,9 +44,9 @@ public class JspBundleTest {
     @Rule
     public PaxExamServer exam = new PaxExamServer();
 
-    private String port = System.getProperty("pax.exam.itest.http.port", "18181");
+    private String port = System.getProperty("pax.shiro.itest.http.port", "18181");
     
-    protected WebClient webClient = new WebClient();
+    private WebClient webClient = new WebClient();
 
     
 

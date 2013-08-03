@@ -9,6 +9,8 @@
 
     <groupId>org.ops4j.pax.shiro.itest</groupId>
     <artifactId>itest-osgi</artifactId>
+    
+    <name>OPS4J Pax Shiro OSGi Integration Tests</name>
 
     <dependencies>
         
@@ -23,8 +25,6 @@
             <artifactId>logback-classic</artifactId>
             <scope>test</scope>
         </dependency>
-
-
 
         <dependency>
             <groupId>org.ops4j.pax.exam</groupId>
