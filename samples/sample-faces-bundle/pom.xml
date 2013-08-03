@@ -52,7 +52,17 @@
                     <instructions>
                         <_wab>src/main/webapp/</_wab>
                         <Web-ContextPath>sample-faces-bundle</Web-ContextPath>
-                        <Import-Package>org.apache.shiro.web.env, org.apache.shiro.web.servlet, javax.servlet.jsp</Import-Package>
+                        <Import-Package>
+                            org.apache.shiro.web.env, 
+                            org.apache.shiro.web.servlet,
+                            org.apache.myfaces.webapp,
+                            javax.faces.webapp, 
+                            javax.servlet
+                        </Import-Package>
+                        <Require-Bundle>
+                            org.apache.myfaces.core.api,
+                            org.apache.myfaces.core.impl
+                        </Require-Bundle>
                     </instructions>
                 </configuration>
                 <executions>
