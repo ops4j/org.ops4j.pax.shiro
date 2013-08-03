@@ -29,36 +29,44 @@ import javax.enterprise.context.ApplicationScoped;
 import javax.enterprise.inject.Produces;
 
 import org.apache.shiro.ShiroException;
-import org.apache.shiro.UnavailableSecurityManagerException;
 import org.apache.shiro.mgt.SecurityManager;
 import org.apache.shiro.session.Session;
 import org.apache.shiro.subject.Subject;
 
 @ApplicationScoped
-public class ShiroFactory {
+public class ShiroProducer {
 
     @Produces
     public Subject subject() {
-        return proxy(Subject.class, new SubjectInvocationhandler());
+        return proxy(Subject.class, new SubjectInvocationHandler());
     }
 
     @Produces
     public SecurityManager securityManager() {
-        return proxy(SecurityManager.class, new SecurityManagerInvocationhandler());
+        return proxy(SecurityManager.class, new SecurityManagerInvocationHandler());
     }
 
     @Produces
     public Session session() {
-        return proxy(Session.class, new SessionInvocationhandler());
+        return proxy(Session.class, new SessionInvocationHandler());
+    }
+    
+    private static ShiroException unwrap(InvocationTargetException exc) {
+        if (exc.getCause() instanceof ShiroException) {
+            return (ShiroException) exc.getCause();
+        }
+        else  {
+            return new ShiroException(exc.getCause());
+        }
     }
 
     @SuppressWarnings("unchecked")
     private <T> T proxy(final Class<T> clazz, final InvocationHandler ih) {
-        return (T) Proxy
-            .newProxyInstance(getClass().getClassLoader(), new Class<?>[] { clazz }, ih);
+        ClassLoader cl = getClass().getClassLoader();
+        return (T) Proxy.newProxyInstance(cl, new Class<?>[] { clazz }, ih);
     }
 
-    private static class SubjectInvocationhandler extends Handler {
+    private static class SubjectInvocationHandler extends Handler {
 
         public Object handlerInvoke(final Object proxy, final Method method, final Object[] args) {
             try {
@@ -71,19 +79,23 @@ public class ShiroFactory {
                 throw new ShiroException(exc);
             }
             catch (InvocationTargetException exc) {
-                throw new ShiroException(exc);
+                throw unwrap(exc);
             }
         }
     }
 
-    private class SecurityManagerInvocationhandler extends Handler {
+    private class SecurityManagerInvocationHandler extends Handler {
 
+        private SecurityManager delegate = getSecurityManager();
+        
         public Object handlerInvoke(Object proxy, Method method, Object[] args) {
             try {
-                return method.invoke(getSecurityManager(), args);
-            }
-            catch (UnavailableSecurityManagerException exc) {
-                throw new ShiroException(exc);
+                SecurityManager sm = getSecurityManager();
+                // avoid infinite recursion
+                if (sm == proxy) {
+                    sm = delegate;
+                }
+                return method.invoke(sm, args);
             }
             catch (IllegalAccessException exc) {
                 throw new ShiroException(exc);
@@ -92,12 +104,12 @@ public class ShiroFactory {
                 throw new ShiroException(exc);
             }
             catch (InvocationTargetException exc) {
-                throw new ShiroException(exc.getCause());
+                throw unwrap(exc);
             }
         }
     }
 
-    private class SessionInvocationhandler extends Handler {
+    private class SessionInvocationHandler extends Handler {
 
         public Object handlerInvoke(Object proxy, Method method, Object[] args) {
             try {
@@ -110,7 +122,7 @@ public class ShiroFactory {
                 throw new ShiroException(exc);
             }
             catch (InvocationTargetException exc) {
-                throw new ShiroException(exc.getCause());
+                throw unwrap(exc);
             }
         }
     }

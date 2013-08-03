@@ -28,6 +28,7 @@ import org.apache.shiro.authz.annotation.RequiresGuest;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.apache.shiro.authz.annotation.RequiresRoles;
 import org.apache.shiro.authz.annotation.RequiresUser;
+import org.apache.shiro.mgt.SecurityManager;
 import org.apache.shiro.subject.PrincipalCollection;
 import org.apache.shiro.subject.SimplePrincipalCollection;
 import org.apache.shiro.subject.Subject;
@@ -48,8 +49,11 @@ public class ShiroInterceptorTest extends AbstractCdiTest {
     @Inject
     private SecuredService service;
     
+    @Inject
+    private SecurityManager securityManager;
+    
     private ThreadState threadState;
-
+    
     @After
     public void clearSubject() {
         if (threadState != null) {
@@ -64,21 +68,21 @@ public class ShiroInterceptorTest extends AbstractCdiTest {
     }
 
     protected void bindUser() {
-        PrincipalCollection principals = new SimplePrincipalCollection("foo", realm.getName());
+        PrincipalCollection principals = new SimplePrincipalCollection("foo", getRealmName());
         bind(new Subject.Builder(securityManager).principals(principals).buildSubject());
     }
 
     protected void bindHobbit() {
-        PrincipalCollection principals = new SimplePrincipalCollection("bilbo", realm.getName());
+        PrincipalCollection principals = new SimplePrincipalCollection("bilbo", getRealmName());
         bind(new Subject.Builder(securityManager).principals(principals).buildSubject());
     }
 
     protected void bindAuthenticatedUser() {
-        PrincipalCollection principals = new SimplePrincipalCollection("foo", realm.getName());
+        PrincipalCollection principals = new SimplePrincipalCollection("foo", getRealmName());
         bind(new Subject.Builder(securityManager).
                 principals(principals).authenticated(true).buildSubject());
     }
-
+    
     @Test
     public void guest() {
         assertEquals("hi foo", service.simple("foo"));

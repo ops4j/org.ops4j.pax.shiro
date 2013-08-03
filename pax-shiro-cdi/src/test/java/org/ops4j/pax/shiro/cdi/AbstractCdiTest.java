@@ -35,8 +35,8 @@ import org.ops4j.pax.exam.junit.PaxExam;
 @RunWith(PaxExam.class)
 public abstract class AbstractCdiTest  {
     
-    protected static SimpleAccountRealm realm;
-    protected static DefaultSecurityManager securityManager;
+    private static SimpleAccountRealm realm;
+    private static DefaultSecurityManager securityManager;
 
     @BeforeClass
     public static void start() throws Exception {
@@ -63,5 +63,9 @@ public abstract class AbstractCdiTest  {
     @AfterClass
     public static void close() throws Exception {
         SecurityUtils.setSecurityManager(null);
-    }    
+    }
+    
+    protected String getRealmName() {
+        return realm.getName();
+    }
 }
