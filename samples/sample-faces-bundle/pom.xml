@@ -61,7 +61,8 @@
                         </Import-Package>
                         <Require-Bundle>
                             org.apache.myfaces.core.api,
-                            org.apache.myfaces.core.impl
+                            org.apache.myfaces.core.impl,
+                            org.ops4j.pax.shiro.faces
                         </Require-Bundle>
                     </instructions>
                 </configuration>
