@@ -16,39 +16,54 @@
  */
 package org.ops4j.pax.shiro.itest.osgi;
 
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.CoreMatchers.notNullValue;
+import static org.junit.Assert.assertThat;
 import static org.ops4j.pax.exam.CoreOptions.frameworkProperty;
 import static org.ops4j.pax.exam.CoreOptions.mavenBundle;
 import static org.ops4j.pax.exam.CoreOptions.options;
 import static org.ops4j.pax.exam.CoreOptions.systemProperty;
 
 import java.io.IOException;
-import java.net.MalformedURLException;
 
 import org.junit.Before;
+import org.junit.ClassRule;
+import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.ExpectedException;
+import org.openqa.selenium.By;
+import org.openqa.selenium.Cookie;
+import org.openqa.selenium.NoSuchElementException;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.htmlunit.HtmlUnitDriver;
 import org.ops4j.pax.exam.Configuration;
 import org.ops4j.pax.exam.Option;
 import org.ops4j.pax.exam.junit.PaxExamServer;
 import org.ops4j.pax.exam.util.PathUtils;
 
-import com.gargoylesoftware.htmlunit.ElementNotFoundException;
-import com.gargoylesoftware.htmlunit.FailingHttpStatusCodeException;
-import com.gargoylesoftware.htmlunit.WebClient;
-import com.gargoylesoftware.htmlunit.html.HtmlForm;
-import com.gargoylesoftware.htmlunit.html.HtmlInput;
-import com.gargoylesoftware.htmlunit.html.HtmlPage;
-
+/**
+ * Tests shiro-faces in OSGi mode. 
+ * <p>
+ * Some tests currently fail due to incomplete JSF support in Pax Web.
+ * Tags from other bundles do not get recognized and are rendered verbatim.
+ * 
+ * @author Harald Wellmann
+ *
+ */
 public class FacesBundleTest {
 
+    /** We use a class rule to start Pax Web only once. */
+    @ClassRule
+    public static PaxExamServer exam = new PaxExamServer();
+
     @Rule
-    public PaxExamServer exam = new PaxExamServer();
+    public ExpectedException thrown = ExpectedException.none();
 
+    private WebDriver webDriver = new HtmlUnitDriver();
+    
     private String port = System.getProperty("pax.shiro.itest.http.port", "18181");
-    
-    private WebClient webClient = new WebClient();
-
-    
+        
 
     @Configuration
     public Option[] configuration() {
@@ -61,8 +76,12 @@ public class FacesBundleTest {
             systemProperty("logback.configurationFile").value(
                 "file:" + PathUtils.getBaseDir() + "/src/test/resources/logback.xml"),
 
+            mavenBundle("org.ops4j.pax.url", "pax-url-commons").version("1.6.0"),
+            mavenBundle("org.ops4j.pax.url", "pax-url-classpath").version("1.6.0"),
             mavenBundle("org.ops4j.base", "ops4j-base-lang").version("1.4.0"),
-            mavenBundle("org.ops4j.pax.swissbox", "pax-swissbox-core").version("1.6.0"),
+            mavenBundle("org.ops4j.base", "ops4j-base-util-property").version("1.4.0"),
+            mavenBundle("org.ops4j.pax.swissbox", "pax-swissbox-core").version("1.7.0"),
+            mavenBundle("org.ops4j.pax.swissbox", "pax-swissbox-property").version("1.7.0"),
             mavenBundle("org.apache.xbean", "xbean-asm-shaded", "3.12"),
             mavenBundle("org.apache.xbean", "xbean-finder-shaded", "3.12"),
             mavenBundle("org.ops4j.pax.web", "pax-web-spi").version("3.0.2"),
@@ -101,6 +120,7 @@ public class FacesBundleTest {
             mavenBundle("commons-codec", "commons-codec", "1.7"),
             mavenBundle("commons-digester", "commons-digester", "1.8.1"),
 
+            mavenBundle("org.ops4j.pax.shiro.", "pax-shiro-faces", "0.1.0-SNAPSHOT"),
             mavenBundle("org.ops4j.pax.shiro.samples", "sample-faces-bundle", "0.1.0-SNAPSHOT")
 
         );
@@ -108,33 +128,81 @@ public class FacesBundleTest {
 
     @Before
     public void logOut() throws IOException, InterruptedException {
-        
         // wait for server to come up
         Thread.sleep(2000);
         
-        // make sure we are logged out
-        HtmlPage homePage = webClient.getPage(getBaseUri());
+        // Make sure we are logged out
+        webDriver.get(getBaseUri());
         try {
-            homePage.getAnchorByHref("/logout").click();
+            webDriver.findElement(By.partialLinkText("Log out")).click();
         }
-        catch (ElementNotFoundException exc) {
-            // ignore
+        catch (NoSuchElementException e) {
+            //Ignore
         }
     }
 
     @Test
-    public void logIn() throws FailingHttpStatusCodeException, MalformedURLException, IOException, InterruptedException {
+    public void logIn() {
 
-        HtmlPage page = webClient.getPage(getBaseUri() + "login.jsf");
-        HtmlForm form = page.getFormByName("login");
-        form.<HtmlInput>getInputByName("login:username").setValueAttribute("root");
-        form.<HtmlInput>getInputByName("login:password").setValueAttribute("secret");
-        page = form.<HtmlInput>getInputByName("login:submit").click();
+        webDriver.get(getBaseUri() + "login.jsf");
+        webDriver.findElement(By.name("login:username")).sendKeys("root");
+        webDriver.findElement(By.name("login:password")).sendKeys("secret");
+        webDriver.findElement(By.name("login:submit")).click();
 
-        // This'll throw an exception if not logged in
-        page.getAnchorByHref("/sample-faces-bundle/logout.jsf");
+        // This'll throw an expection if not logged in
+        webDriver.findElement(By.partialLinkText("Log out"));
+    }
+
+    @Test
+    public void shouldRememberMeOnClientRestart() throws Exception {
+
+        webDriver.get(getBaseUri() + "login.jsf");
+        webDriver.findElement(By.name("login:username")).sendKeys("root");
+        webDriver.findElement(By.name("login:password")).sendKeys("secret");
+        webDriver.findElement(By.name("login:rememberMe")).click();
+        webDriver.findElement(By.name("login:submit")).click();
+
+        Cookie cookie = webDriver.manage().getCookieNamed("rememberMe");
+        webDriver.close();
+        
+        webDriver = new HtmlUnitDriver();
+        webDriver.get(getBaseUri());
+        webDriver.manage().addCookie(cookie);
+
+        webDriver.get(getBaseUri());
+        webDriver.findElement(By.partialLinkText("Log out"));
+
+        webDriver.findElement(By.partialLinkText("account")).click();
+
+        // login page should be shown again - user remembered but not authenticated
+        webDriver.findElement(By.name("login:username"));
     }
     
+    @Test
+    @Ignore("missing JSF support in Pax Web")
+    public void shouldNotRememberMeWithoutCookie() throws Exception {
+
+        webDriver.get(getBaseUri() + "login.jsf");
+        webDriver.findElement(By.name("login:username")).sendKeys("root");
+        webDriver.findElement(By.name("login:password")).sendKeys("secret");
+        webDriver.findElement(By.name("login:rememberMe")).click();
+        webDriver.findElement(By.name("login:submit")).click();
+
+        Cookie cookie = webDriver.manage().getCookieNamed("rememberMe");
+        assertThat(cookie, is(notNullValue()));
+        webDriver.close();
+        
+        webDriver = new HtmlUnitDriver();
+        webDriver.get(getBaseUri());
+
+        // fails since tags get rendered verbatim, so we do see the
+        // content that should be hidden
+        thrown.expect(NoSuchElementException.class);
+        webDriver.findElement(By.partialLinkText("Log out"));
+    }    
+    
+    
+
     private String getBaseUri() {
         return "http://localhost:" + port + "/sample-faces-bundle/";
     }    
