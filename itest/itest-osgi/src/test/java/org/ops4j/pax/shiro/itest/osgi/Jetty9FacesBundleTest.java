@@ -94,6 +94,7 @@ public class Jetty9FacesBundleTest {
             mavenBundle("org.eclipse.jetty", "jetty-deploy").versionAsInProject(),
             mavenBundle("org.eclipse.jetty", "jetty-http").versionAsInProject(),
             mavenBundle("org.eclipse.jetty", "jetty-io").versionAsInProject(),
+            mavenBundle("org.eclipse.jetty", "jetty-jndi").versionAsInProject(),
             mavenBundle("org.eclipse.jetty", "jetty-security").versionAsInProject(),
             mavenBundle("org.eclipse.jetty", "jetty-server").versionAsInProject(),
             mavenBundle("org.eclipse.jetty", "jetty-servlet").versionAsInProject(),
@@ -105,6 +106,7 @@ public class Jetty9FacesBundleTest {
 
             mavenBundle("org.eclipse.jetty.orbit", "com.sun.el").versionAsInProject(),
             mavenBundle("org.eclipse.jetty.orbit", "javax.el", "2.2.0.v201303151357"),
+            mavenBundle("org.eclipse.jetty.orbit", "javax.mail.glassfish", "1.4.1.v201005082020"),
             mavenBundle("org.eclipse.jetty.orbit", "javax.servlet.jsp").versionAsInProject(),
             mavenBundle("org.eclipse.jetty.orbit", "javax.servlet.jsp.jstl").versionAsInProject(),
             mavenBundle("org.eclipse.jetty.orbit", "org.apache.jasper.glassfish")
