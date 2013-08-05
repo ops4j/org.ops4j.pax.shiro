@@ -47,6 +47,8 @@
                             org.apache.shiro.web.tags, 
                             javax.servlet.jsp
                         </Import-Package>
+                        <!-- ensure that Jetty finds taglib -->
+                        <Require-TldBundle>org.apache.shiro.web</Require-TldBundle>
                     </instructions>
                 </configuration>
                 <executions>
