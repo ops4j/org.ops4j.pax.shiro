@@ -5,6 +5,13 @@
     <listener>
         <listener-class>org.apache.shiro.web.env.EnvironmentLoaderListener</listener-class>
     </listener>
+    
+    <!-- This listener should not be here. Moving it to jetty-web.xml works for standalone Jetty/OSGi but not for Pax Web. -->
+    <listener>
+        <listener-class>org.apache.myfaces.webapp.StartupServletContextListener</listener-class>
+    </listener>
+    
+    
 
     <filter>
         <filter-name>ShiroFilter</filter-name>
