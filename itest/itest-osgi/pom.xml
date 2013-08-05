@@ -9,11 +9,11 @@
 
     <groupId>org.ops4j.pax.shiro.itest</groupId>
     <artifactId>itest-osgi</artifactId>
-    
+
     <name>OPS4J Pax Shiro OSGi Integration Tests</name>
 
     <dependencies>
-        
+
         <dependency>
             <groupId>ch.qos.logback</groupId>
             <artifactId>logback-core</artifactId>
@@ -70,12 +70,6 @@
         </dependency>
 
         <dependency>
-            <groupId>org.ops4j.pax.url</groupId>
-            <artifactId>pax-url-wrap</artifactId>
-            <scope>test</scope>
-        </dependency>
-
-        <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-api</artifactId>
         </dependency>
@@ -91,15 +85,40 @@
             <artifactId>org.eclipse.osgi</artifactId>
             <scope>test</scope>
         </dependency>
-        
+
         <dependency>
-            <groupId>net.sourceforge.htmlunit</groupId>
-            <artifactId>htmlunit</artifactId>
-            <version>2.6</version>
+            <groupId>org.seleniumhq.selenium</groupId>
+            <artifactId>selenium-htmlunit-driver</artifactId>
+            <version>2.33.0</version>
             <scope>test</scope>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.eclipse.jetty</groupId>
+                    <artifactId>jetty-websocket</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
         
+        <dependency>
+          <groupId>org.eclipse.jetty.orbit</groupId>
+          <artifactId>org.apache.jasper.glassfish</artifactId>
+          <version>2.2.2.v201112011158</version>
+          <scope>provided</scope>
+        </dependency>
 
+        <dependency>
+          <groupId>org.eclipse.jetty.osgi</groupId>
+          <artifactId>jetty-osgi-boot-jsp</artifactId>
+          <version>9.0.4.v20130625</version>
+          <scope>provided</scope>
+        </dependency>
+
+        <dependency>
+          <groupId>org.eclipse.jetty.osgi</groupId>
+          <artifactId>jetty-osgi-boot</artifactId>
+          <version>9.0.4.v20130625</version>
+          <scope>provided</scope>
+        </dependency>
 
     </dependencies>
 
