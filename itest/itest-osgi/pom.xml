@@ -120,6 +120,12 @@
           <scope>provided</scope>
         </dependency>
 
+        <dependency>
+          <groupId>org.apache.shiro</groupId>
+          <artifactId>shiro-web</artifactId>
+          <scope>provided</scope>
+        </dependency>
+
     </dependencies>
 
     <build>
@@ -134,6 +140,35 @@
                         <goals>
                             <goal>generate-depends-file</goal>
                         </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-dependency-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>copy-taglib-bundles</id>
+                        <goals>
+                            <goal>copy</goal>
+                        </goals>
+                        <configuration>
+                            <artifactItems>
+                                <artifactItem>
+                                    <groupId>org.eclipse.jetty.orbit</groupId>
+                                    <artifactId>org.apache.taglibs.standard.glassfish</artifactId>
+                                    <version>1.2.0.v201112081803</version>
+                                    <outputDirectory>${project.build.directory}</outputDirectory>
+                                </artifactItem>
+                                <artifactItem>
+                                    <groupId>org.apache.shiro</groupId>
+                                    <artifactId>shiro-web</artifactId>
+                                    <version>${apache.shiro.version}</version>
+                                    <outputDirectory>${project.build.directory}</outputDirectory>
+                                </artifactItem>
+                            </artifactItems>
+                            <stripVersion>true</stripVersion>
+                        </configuration>
                     </execution>
                 </executions>
             </plugin>
