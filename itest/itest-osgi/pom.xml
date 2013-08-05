@@ -166,6 +166,12 @@
                                     <version>${apache.shiro.version}</version>
                                     <outputDirectory>${project.build.directory}</outputDirectory>
                                 </artifactItem>
+                                <artifactItem>
+                                    <groupId>org.apache.myfaces.core</groupId>
+                                    <artifactId>myfaces-impl</artifactId>
+                                    <version>2.1.12</version>
+                                    <outputDirectory>${project.build.directory}</outputDirectory>
+                                </artifactItem>
                             </artifactItems>
                             <stripVersion>true</stripVersion>
                         </configuration>

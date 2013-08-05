@@ -19,6 +19,7 @@ package org.ops4j.pax.shiro.itest.osgi;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.notNullValue;
 import static org.junit.Assert.assertThat;
+import static org.ops4j.pax.exam.CoreOptions.bundle;
 import static org.ops4j.pax.exam.CoreOptions.frameworkProperty;
 import static org.ops4j.pax.exam.CoreOptions.mavenBundle;
 import static org.ops4j.pax.exam.CoreOptions.options;
@@ -117,8 +118,9 @@ public class Jetty9FacesBundleTest {
             mavenBundle("org.apache.shiro", "shiro-web", "1.2.2"),
             mavenBundle("org.apache.shiro", "shiro-core", "1.2.2"),
 
-            mavenBundle("org.apache.myfaces.core", "myfaces-impl", "2.1.12"),
+//            mavenBundle("org.apache.myfaces.core", "myfaces-impl", "2.1.12"),
             mavenBundle("org.apache.myfaces.core", "myfaces-api", "2.1.12"),
+            bundle("reference:file:" + PathUtils.getBaseDir() + "/target/myfaces-impl.jar"),
 
             mavenBundle("org.apache.geronimo.specs", "geronimo-annotation_1.1_spec", "1.0.1"),
             mavenBundle("org.apache.geronimo.specs", "geronimo-validation_1.0_spec", "1.1"),
