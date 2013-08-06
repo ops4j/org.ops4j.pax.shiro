@@ -16,8 +16,14 @@
  * limitations under the License.
  */
 
-/**
- * Annotations for securing applications with Shiro in combination
- * with CDI.
- */
-package org.ops4j.pax.shiro.cdi;
+package org.ops4j.pax.shiro.cdi.config;
+
+import javax.inject.Named;
+
+import org.apache.shiro.authc.credential.SimpleCredentialsMatcher;
+import org.ops4j.pax.shiro.cdi.ShiroIni;
+
+@Named @ShiroIni
+public class MyPasswordMatcher extends SimpleCredentialsMatcher {
+
+}

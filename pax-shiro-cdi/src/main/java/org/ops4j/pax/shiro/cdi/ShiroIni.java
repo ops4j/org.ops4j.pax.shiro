@@ -32,7 +32,7 @@ import javax.inject.Qualifier;
 
 /**
  * Qualifies managed beans as referenceable from Shiro INI files with a given name.
- * 
+ * <p>
  * The bean name can be set explicitly with a {@code @Named} qualifier. Otherwise, if
  * {@code Bean.getBeanClass()} is a bean type of the given bean, the bean name will be the simple
  * class name of this class, with the first letter converted to lower case.

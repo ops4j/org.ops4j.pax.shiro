@@ -16,7 +16,7 @@
  * limitations under the License.
  */
 
-package org.ops4j.pax.shiro.cdi;
+package org.ops4j.pax.shiro.cdi.impl;
 
 import static org.apache.shiro.SecurityUtils.getSecurityManager;
 import static org.apache.shiro.SecurityUtils.getSubject;
