@@ -20,6 +20,11 @@ package org.ops4j.pax.shiro.samples.web.cdi;
 
 
 /**
+ * Simple user object, containing the username and the hashed password.
+ * In real life, this would most likely be stored in a database.
+ * <p>
+ * For this sample, we just use a global hash map.
+ * 
  * @author Harald Wellmann
  *
  */

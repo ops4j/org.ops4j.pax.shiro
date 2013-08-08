@@ -24,7 +24,12 @@ import javax.inject.Named;
 
 import org.apache.shiro.subject.Subject;
 
-
+/**
+ * A named bean wrapping the Subject bean. To be used in JSF views.
+ * 
+ * @author Harald Wellmann
+ *
+ */
 @RequestScoped
 @Named("subject")
 public class SubjectBean {

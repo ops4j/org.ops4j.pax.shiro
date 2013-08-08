@@ -23,6 +23,11 @@ import javax.inject.Inject;
 
 
 /**
+ * Demo user DAO implementation. In real life, we might inject
+ * a PersistenceContext and fetch users from a database.
+ * <p>
+ * For this demo, we just delegate to simple in-memory repository.
+ * 
  * @author Harald Wellmann
  *
  */

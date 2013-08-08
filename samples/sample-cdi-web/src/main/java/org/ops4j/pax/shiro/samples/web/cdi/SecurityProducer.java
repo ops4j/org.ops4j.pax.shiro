@@ -25,14 +25,17 @@ import org.apache.shiro.authc.credential.DefaultPasswordService;
 import org.apache.shiro.authc.credential.PasswordService;
 import org.ops4j.pax.shiro.cdi.ShiroIni;
 
-
 /**
+ * Produces a password service CDI bean to be referenced in shiro.ini.
+ * 
  * @author Harald Wellmann
- *
+ * 
  */
 public class SecurityProducer {
-    
-    @Produces @ShiroIni @Named
+
+    @Produces
+    @ShiroIni
+    @Named
     public PasswordService passwordService() {
         return new DefaultPasswordService();
     }

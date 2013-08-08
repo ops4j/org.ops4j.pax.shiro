@@ -28,26 +28,33 @@ import javax.inject.Inject;
 import org.apache.shiro.authc.credential.PasswordService;
 import org.ops4j.pax.shiro.cdi.ShiroIni;
 
+/**
+ * Simple memory-based user repository. Two users are inserted when this bean is created. The
+ * passwords get encrypted using an injected PasswordService.
+ * 
+ * @author Harald Wellmann
+ * 
+ */
 @ApplicationScoped
 public class UserRepository {
 
     private Map<String, User> users = new HashMap<String, User>();
-    
-    @Inject @ShiroIni
+
+    @Inject
+    @ShiroIni
     private PasswordService passwordService;
-    
+
     @PostConstruct
     public void init() {
         createUser("admin", "secret");
-        createUser("user", "changeme");        
+        createUser("user", "changeme");
     }
-    
-    
+
     public void createUser(String username, String rawPassword) {
         User user = new User(username, passwordService.encryptPassword(rawPassword));
         users.put(username, user);
-    } 
-    
+    }
+
     public User findUser(String username) {
         return users.get(username);
     }

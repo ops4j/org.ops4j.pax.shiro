@@ -29,6 +29,10 @@ import org.apache.shiro.realm.AuthenticatingRealm;
 import org.ops4j.pax.shiro.cdi.ShiroIni;
 
 /**
+ * Simple realm implementation, delegating to a UserDao.
+ * The {@code ShiroIni} annotation ensures we can reference
+ * this CDI bean in shiro.ini
+ * 
  * @author Harald Wellmann
  * 
  */
