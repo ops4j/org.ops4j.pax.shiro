@@ -18,15 +18,8 @@
 
 package org.ops4j.pax.shiro.samples.web.cdi;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import javax.ejb.Stateless;
 import javax.inject.Inject;
-
-import org.apache.shiro.authc.credential.DefaultPasswordService;
-import org.apache.shiro.authc.credential.PasswordService;
-import org.ops4j.pax.shiro.cdi.ShiroIni;
 
 
 /**
@@ -35,26 +28,11 @@ import org.ops4j.pax.shiro.cdi.ShiroIni;
  */
 @Stateless
 public class UserDao {
-    
-    private static Map<String, User> users = new HashMap<String, User>();
-    
-    @Inject @ShiroIni
-    private PasswordService passwordService;
-    
-    static {
-        DefaultPasswordService passwordService = new DefaultPasswordService();
-        User user = new User("admin", passwordService.encryptPassword("secret"));
-        users.put("admin", user);
-    }
-    
-    
-    public void createUser(String username, String rawPassword) {
-        User user = new User("admin", passwordService.encryptPassword("secret"));
-        users.put("admin", user);
-    }
-    
+
+    @Inject
+    private UserRepository userRepository;
     
     public User findUser(String username) {
-        return users.get(username);
+        return userRepository.findUser(username);
     }
 }

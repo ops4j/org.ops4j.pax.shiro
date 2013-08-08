@@ -19,55 +19,20 @@
 package org.ops4j.pax.shiro.samples.web.cdi;
 
 import javax.enterprise.context.RequestScoped;
+import javax.inject.Inject;
 import javax.inject.Named;
 
+import org.apache.shiro.subject.Subject;
 
-/**
- * Backing bean for the login form.
- * 
- * @author Harald Wellmann
- *
- */
-@Named
+
 @RequestScoped
-public class Login {
+@Named("subject")
+public class SubjectBean {
     
-    private String userName;
+    @Inject
+    private Subject subject;
     
-    private String password;
-
-    
-    /**
-     * @return the userName
-     */
-    public String getUserName() {
-        return userName;
+    public String getUsername() {
+        return subject.getPrincipal().toString();
     }
-
-    
-    /**
-     * @param userName the userName to set
-     */
-    public void setUserName(String userName) {
-        this.userName = userName;
-    }
-
-    
-    /**
-     * @return the password
-     */
-    public String getPassword() {
-        return password;
-    }
-
-    
-    /**
-     * @param password the password to set
-     */
-    public void setPassword(String password) {
-        this.password = password;
-    }
-    
-    
-
 }
