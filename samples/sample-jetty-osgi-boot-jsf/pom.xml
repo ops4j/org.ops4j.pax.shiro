@@ -1,0 +1,50 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>org.ops4j.pax.shiro</groupId>
+        <artifactId>samples</artifactId>
+        <version>0.1.0-SNAPSHOT</version>
+    </parent>
+    
+    <groupId>org.ops4j.pax.shiro.samples</groupId>
+    <artifactId>sample-jetty-osgi-boot-jsf</artifactId>
+    <packaging>bundle</packaging>
+    
+    <name>OPS4J Pax Shiro JSF Support for Jetty</name>
+
+    <properties>
+      <bundle.namespace.suffix>sample.jetty.osgi.boot.jsf</bundle.namespace.suffix>
+    </properties>
+    
+    <dependencies>
+        <dependency>
+            <groupId>org.eclipse.jetty.osgi</groupId>
+            <artifactId>jetty-osgi-boot</artifactId>
+            <version>9.0.4.v20130625</version>
+        </dependency>
+    </dependencies>
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.felix</groupId>
+                <artifactId>maven-bundle-plugin</artifactId>
+                <extensions>true</extensions>
+                <configuration>
+                    <instructions>
+                        <Fragment-Host>org.eclipse.jetty.osgi.boot</Fragment-Host>
+                    </instructions>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>generate-manifest</id>
+                        <phase>process-classes</phase>
+                        <goals>
+                            <goal>manifest</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+</project>

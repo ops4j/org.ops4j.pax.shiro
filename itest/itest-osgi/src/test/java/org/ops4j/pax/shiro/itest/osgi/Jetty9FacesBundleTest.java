@@ -29,7 +29,6 @@ import java.io.IOException;
 
 import org.junit.Before;
 import org.junit.ClassRule;
-import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
@@ -46,8 +45,7 @@ import org.ops4j.pax.exam.util.PathUtils;
 /**
  * Tests shiro-faces in OSGi mode. 
  * <p>
- * Some tests currently fail due to incomplete JSF support in Jetty in OSGi mode.
- * Tags from other bundles do not get recognized and are rendered verbatim.
+ * JSF support in Jetty requires a custom extension fragment sample-jetty-osgi-boot-jsf.
  * 
  * @author Harald Wellmann
  *
@@ -90,6 +88,7 @@ public class Jetty9FacesBundleTest {
             mavenBundle("org.eclipse.jetty.osgi", "jetty-osgi-boot").versionAsInProject(),
             mavenBundle("org.eclipse.jetty.osgi", "jetty-osgi-boot-jsp").versionAsInProject()
                 .noStart(),
+            mavenBundle("org.ops4j.pax.shiro.samples", "sample-jetty-osgi-boot-jsf").versionAsInProject().noStart(),
 
             mavenBundle("org.eclipse.jetty", "jetty-deploy").versionAsInProject(),
             mavenBundle("org.eclipse.jetty", "jetty-http").versionAsInProject(),
@@ -120,7 +119,6 @@ public class Jetty9FacesBundleTest {
             mavenBundle("org.apache.shiro", "shiro-web", "1.2.2"),
             mavenBundle("org.apache.shiro", "shiro-core", "1.2.2"),
 
-//            mavenBundle("org.apache.myfaces.core", "myfaces-impl", "2.1.12"),
             mavenBundle("org.apache.myfaces.core", "myfaces-api", "2.1.12"),
             bundle("reference:file:" + PathUtils.getBaseDir() + "/target/myfaces-impl.jar"),
 
@@ -129,8 +127,8 @@ public class Jetty9FacesBundleTest {
             mavenBundle("commons-codec", "commons-codec", "1.7"),
             mavenBundle("commons-digester", "commons-digester", "1.8.1"),
 
-            mavenBundle("org.ops4j.pax.shiro.", "pax-shiro-faces", "0.1.0-SNAPSHOT"),
-            mavenBundle("org.ops4j.pax.shiro.samples", "sample-faces-bundle", "0.1.0-SNAPSHOT")
+            mavenBundle("org.ops4j.pax.shiro", "pax-shiro-faces").versionAsInProject(),
+            mavenBundle("org.ops4j.pax.shiro.samples", "sample-faces-bundle").versionAsInProject()
 
         );
     }
@@ -188,7 +186,6 @@ public class Jetty9FacesBundleTest {
     }
 
     @Test
-    @Ignore("missing JSF support in Jetty OSGi")
     public void shouldNotRememberMeWithoutCookie() throws Exception {
 
         webDriver.get(getBaseUri() + "login.jsf");

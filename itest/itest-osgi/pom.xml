@@ -125,6 +125,35 @@
           <artifactId>shiro-web</artifactId>
           <scope>provided</scope>
         </dependency>
+    
+        <dependency>
+            <groupId>org.apache.myfaces.core</groupId>
+            <artifactId>myfaces-impl</artifactId>
+            <version>2.1.12</version>
+            <scope>provided</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.ops4j.pax.shiro</groupId>
+            <artifactId>pax-shiro-faces</artifactId>
+            <version>${project.version}</version>
+            <scope>provided</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.ops4j.pax.shiro.samples</groupId>
+            <artifactId>sample-faces-bundle</artifactId>
+            <version>${project.version}</version>
+            <scope>provided</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.ops4j.pax.shiro.samples</groupId>
+            <artifactId>sample-jetty-osgi-boot-jsf</artifactId>
+            <version>${project.version}</version>
+            <scope>provided</scope>
+        </dependency>
+
 
     </dependencies>
 
