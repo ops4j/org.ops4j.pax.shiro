@@ -52,11 +52,11 @@ public class Jetty9JspBundleTest {
     @Configuration
     public Option[] configuration() {
         return options(
-            frameworkProperty("felix.bootdelegation.implicit").value("false"),
             frameworkProperty("osgi.console").value("6666"),
             frameworkProperty("osgi.console.enable.builtin").value("true"),  
             frameworkProperty("osgi.compatibility.bootdelegation").value("true"),
             frameworkProperty("org.osgi.service.http.port").value(port),
+
             systemProperty("jetty.home.bundle").value("org.eclipse.jetty.osgi.boot"),
             systemProperty("jetty.port").value(port),
 
@@ -65,10 +65,10 @@ public class Jetty9JspBundleTest {
             systemProperty("logback.configurationFile").value(
                 "file:" + PathUtils.getBaseDir() + "/src/test/resources/logback.xml"),
 
-            mavenBundle("org.slf4j", "slf4j-api", "1.6.4"),
-            mavenBundle("org.slf4j", "jcl-over-slf4j", "1.6.4"),
-            mavenBundle("ch.qos.logback", "logback-classic", "1.0.0"),
-            mavenBundle("ch.qos.logback", "logback-core", "1.0.0"),
+            mavenBundle("org.slf4j", "slf4j-api").versionAsInProject(),
+            mavenBundle("org.slf4j", "jcl-over-slf4j").versionAsInProject(),
+            mavenBundle("ch.qos.logback", "logback-classic").versionAsInProject(),
+            mavenBundle("ch.qos.logback", "logback-core").versionAsInProject(),
 
             mavenBundle("org.eclipse.jetty.osgi", "jetty-osgi-boot").versionAsInProject(),
             mavenBundle("org.eclipse.jetty.osgi", "jetty-osgi-boot-jsp").versionAsInProject()
@@ -103,7 +103,7 @@ public class Jetty9JspBundleTest {
             bundle("reference:file:" + PathUtils.getBaseDir() + "/target/org.apache.taglibs.standard.glassfish.jar"),
             
             
-            mavenBundle("org.ops4j.pax.shiro.samples", "sample-jsp-bundle", "0.1.0-SNAPSHOT"));
+            mavenBundle("org.ops4j.pax.shiro.samples", "sample-jsp-bundle").versionAsInProject());
     }
 
     @Before

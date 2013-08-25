@@ -75,6 +75,11 @@
         </dependency>
 
         <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>jcl-over-slf4j</artifactId>
+        </dependency>
+
+        <dependency>
             <groupId>org.apache.geronimo.specs</groupId>
             <artifactId>geronimo-atinject_1.0_spec</artifactId>
             <scope>provided</scope>
@@ -143,6 +148,13 @@
         <dependency>
             <groupId>org.ops4j.pax.shiro.samples</groupId>
             <artifactId>sample-faces-bundle</artifactId>
+            <version>${project.version}</version>
+            <scope>provided</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.ops4j.pax.shiro.samples</groupId>
+            <artifactId>sample-jsp-bundle</artifactId>
             <version>${project.version}</version>
             <scope>provided</scope>
         </dependency>

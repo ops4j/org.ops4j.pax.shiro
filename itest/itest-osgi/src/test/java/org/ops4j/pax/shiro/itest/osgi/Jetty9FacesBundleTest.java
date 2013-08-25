@@ -66,12 +66,10 @@ public class Jetty9FacesBundleTest {
     @Configuration
     public Option[] configuration() {
         return options(
-            frameworkProperty("felix.bootdelegation.implicit").value("false"),
             frameworkProperty("osgi.console").value("6666"),
-            frameworkProperty("org.osgi.service.http.port").value(port),
             frameworkProperty("osgi.compatibility.bootdelegation").value("true"),
             systemProperty("jetty.home.bundle").value("org.eclipse.jetty.osgi.boot"),
-            systemProperty("jetty.port").value("18181"),
+            systemProperty("jetty.port").value(port),
             systemProperty("org.eclipse.jetty.osgi.tldbundles").value(
                 "org.apache.myfaces.core.impl"),
 
