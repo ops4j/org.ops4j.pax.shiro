@@ -29,7 +29,7 @@ Run Build:
 
 Releases go to Maven Central.
 
-Pax Shiro is currently incubating. There is no release yet.
+The current release is **Pax Shiro 0.1.0**.
 
 ## Issue Tracking
 
