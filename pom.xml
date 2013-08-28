@@ -11,7 +11,7 @@
     </parent>
 
     <name>OPS4J Pax Shiro Reactor</name>
-    <description>Extension for Apache Shiro</description>
+    <description>Extensions for Apache Shiro</description>
 
     <scm>
         <connection>scm:git:git@github.com:ops4j/org.ops4j.pax.shiro.git</connection>
