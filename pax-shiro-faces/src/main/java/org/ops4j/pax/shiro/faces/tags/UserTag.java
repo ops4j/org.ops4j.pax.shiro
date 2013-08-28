@@ -31,8 +31,6 @@ import javax.faces.view.facelets.TagConfig;
  * who they say they are.
  * <p/>
  * The logically opposite tag of this one is the {@link GuestTag}.
- *
- * @since 1.3
  */
 public class UserTag extends SecureTagHandler {
 

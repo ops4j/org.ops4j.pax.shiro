@@ -30,8 +30,6 @@ import javax.faces.view.facelets.TagConfig;
  * makes no guarantee the user is who they say they are.  The <code>AuthenticatedTag</code> however
  * guarantees that the current user has logged in <em>during their current session</em>, proving they really are
  * who they say they are.
- *
- * @since 1.3
  */
 public class RememberedTag extends SecureTagHandler {
 

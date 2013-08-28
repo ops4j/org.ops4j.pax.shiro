@@ -39,8 +39,6 @@ import org.apache.shiro.subject.PrincipalCollection;
  * the given type. If the {@code property} attribute is specified, the tag prints the string value
  * of the specified property of the principal. If no principal is found or the user is not
  * authenticated, the tag displays nothing unless a {@code defaultValue} is specified.
- * 
- * @since 0.1.0
  */
 public class PrincipalTag extends SecureComponent {
 

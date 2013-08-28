@@ -30,8 +30,6 @@ import javax.faces.view.facelets.TagConfig;
  * this tag does.
  * <p/>
  * The logically opposite tag of this one is the {@link NotAuthenticatedTag}
- *
- * @since 1.3
  */
 public class AuthenticatedTag extends SecureTagHandler {
 

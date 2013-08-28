@@ -23,8 +23,6 @@ import javax.faces.view.facelets.TagConfig;
 /**
  * Tag that renders the tag body only if the current user has the string permissions
  * specified in <tt>name</tt> attribute.
- *
- * @since 1.3
  */
 public class HasPermissionTag extends AuthorizationTagHandler {
 

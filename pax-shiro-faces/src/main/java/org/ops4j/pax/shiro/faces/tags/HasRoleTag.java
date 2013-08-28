@@ -20,9 +20,6 @@ package org.ops4j.pax.shiro.faces.tags;
 
 import javax.faces.view.facelets.TagConfig;
 
-/**
- * @since 1.3
- */
 public class HasRoleTag extends AuthorizationTagHandler {
 
     public HasRoleTag(TagConfig config) {

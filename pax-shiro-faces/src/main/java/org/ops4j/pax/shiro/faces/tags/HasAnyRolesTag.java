@@ -25,8 +25,6 @@ import javax.faces.view.facelets.TagConfig;
 
 /**
  * Displays body content if the current user has any of the roles specified.
- *
- * @since 1.3
  */
 public class HasAnyRolesTag extends AuthorizationTagHandler {
 

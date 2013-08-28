@@ -17,12 +17,10 @@
  */
 
 /**
- * Provides the Shiro JSF Tag Library implementations.
+ * Shiro JSF Facelet Tag Library.
  *
- * <p>Shiro JSF Tags can be used to evalute or not evaluate (show or not show) parts of a JSF page
- * based on the current user's authentication status and/or authorization (access control) abilities.</p>
- *
- * @since 1.3
+ * <p>Shiro Facelet Tags conditionally display their content based on the roles and
+ * permissions of the current Subject.</p>
  */
 package org.ops4j.pax.shiro.faces.tags;
 

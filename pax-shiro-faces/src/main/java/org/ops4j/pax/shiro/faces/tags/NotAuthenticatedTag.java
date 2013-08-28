@@ -25,8 +25,6 @@ import javax.faces.view.facelets.TagConfig;
  * attempt <em>during their current session</em>.
  *
  * <p>The logically opposite tag of this one is the {@link AuthenticatedTag}.
- *
- * @since 1.3
  */
 public class NotAuthenticatedTag extends AuthenticatedTag {
 

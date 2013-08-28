@@ -26,8 +26,6 @@ import javax.faces.view.facelets.TagConfig;
 /**
  * Tag that renders the tag body only if the current user has <em>at least one</em> of the comma-delimited
  * string permissions specified in <tt>name</tt> attribute.
- *
- * @since 1.3
  */
 public class HasAnyPermissionsTag extends AuthorizationTagHandler {
 

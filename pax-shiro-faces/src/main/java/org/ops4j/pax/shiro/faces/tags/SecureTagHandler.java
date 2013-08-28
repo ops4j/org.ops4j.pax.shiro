@@ -30,8 +30,6 @@ import org.apache.shiro.subject.Subject;
 
 /**
  * Base class for all Shiro TagHandlers
- * 
- * @since 1.3
  */
 public abstract class SecureTagHandler extends TagHandler {
 

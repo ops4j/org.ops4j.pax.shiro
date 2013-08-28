@@ -30,10 +30,8 @@ import java.io.IOException;
 /**
  * Base class for JSF components.
  *
- * <p>OBS: Your subclass is responsible for saving the state of the component. See {@link org.ops4j.pax.shiro.faces.tags.PrincipalTag}'s
+ * <p>NOTE: Your subclass is responsible for saving the state of the component. See {@link org.ops4j.pax.shiro.faces.tags.PrincipalTag}'s
  * StateHolder Methods for an exemple.
- * 
- * @since 1.3
  */
 public abstract class SecureComponent extends UIOutput {
 
