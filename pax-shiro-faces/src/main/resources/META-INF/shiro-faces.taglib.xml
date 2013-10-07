@@ -145,7 +145,7 @@
         <description>Displays the user's principal or a property of the user's principal.</description>
         <tag-name>principal</tag-name>
         <component>
-            <component-type>org.ops4j.pax.shiro.faces.tags.PrincipalTag</component-type>
+            <component-type>org.ops4j.pax.shiro.component.Principal</component-type>
         </component>
         <attribute>
             <description></description>

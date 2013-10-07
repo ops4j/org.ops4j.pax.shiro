@@ -22,9 +22,9 @@ import java.beans.BeanInfo;
 import java.beans.IntrospectionException;
 import java.beans.Introspector;
 import java.beans.PropertyDescriptor;
-import java.io.IOException;
 import java.lang.reflect.Modifier;
 
+import javax.faces.component.FacesComponent;
 import javax.faces.context.FacesContext;
 
 import org.apache.shiro.ShiroException;
@@ -40,6 +40,7 @@ import org.apache.shiro.subject.PrincipalCollection;
  * of the specified property of the principal. If no principal is found or the user is not
  * authenticated, the tag displays nothing unless a {@code defaultValue} is specified.
  */
+@FacesComponent("org.ops4j.pax.shiro.component.Principal")
 public class PrincipalTag extends SecureComponent {
 
     /**
@@ -60,7 +61,7 @@ public class PrincipalTag extends SecureComponent {
     private String defaultValue;
 
     private Object[] values;
-
+    
     public String getType() {
         return type;
     }
@@ -84,9 +85,9 @@ public class PrincipalTag extends SecureComponent {
     public void setDefaultValue(String defaultValue) {
         this.defaultValue = defaultValue;
     }
-
+    
     @Override
-    protected void doEncodeAll(FacesContext ctx) throws IOException {
+    public Object getValue() {
         String strValue = null;
 
         if (getSubject() != null) {
@@ -114,18 +115,8 @@ public class PrincipalTag extends SecureComponent {
         if (strValue == null) {
             strValue = defaultValue;
         }
-
-        // Print out the principal value if not null
-        if (strValue != null) {
-            try {
-                ctx.getResponseWriter().write(strValue);
-            }
-            catch (IOException e) {
-                throw new IOException("Error writing [" + strValue + "] to output.");
-            }
-        }
+        return strValue;
     }
-
     private Object getPrincipalFromClassName() {
         Object principal = null;
 
@@ -142,7 +133,7 @@ public class PrincipalTag extends SecureComponent {
         return principal;
     }
 
-    private String getPrincipalProperty(Object principal, String _property) throws IOException {
+    private String getPrincipalProperty(Object principal, String _property) {
         String strValue = null;
         boolean foundProperty = false;
         try {
@@ -177,7 +168,7 @@ public class PrincipalTag extends SecureComponent {
             final String message = "Property [" + _property + "] not found in principal of type ["
                 + principal.getClass().getName() + "]";
             log.error(message);
-            throw new IOException(message);
+            throw new ShiroException(message);
         }
         return strValue;
     }

@@ -15,6 +15,20 @@
     <dependencies>
 
         <dependency>
+            <groupId>org.apache.myfaces.core</groupId>
+            <artifactId>myfaces-impl</artifactId>
+            <version>2.1.12</version>
+            <scope>runtime</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.glassfish.web</groupId>
+            <artifactId>el-impl</artifactId>
+            <version>2.2</version>
+            <scope>runtime</scope>
+        </dependency>
+
+        <dependency>
             <groupId>org.ops4j.pax.shiro</groupId>
             <artifactId>pax-shiro-faces</artifactId>
             <version>${project.version}</version>
@@ -33,20 +47,6 @@
         <dependency>
             <groupId>javax.el</groupId>
             <artifactId>el-api</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>org.apache.myfaces.core</groupId>
-            <artifactId>myfaces-impl</artifactId>
-            <version>2.1.12</version>
-            <scope>runtime</scope>
-        </dependency>
-
-        <dependency>
-            <groupId>org.glassfish.web</groupId>
-            <artifactId>el-impl</artifactId>
-            <version>2.2</version>
-            <scope>runtime</scope>
         </dependency>
 
         <dependency>
