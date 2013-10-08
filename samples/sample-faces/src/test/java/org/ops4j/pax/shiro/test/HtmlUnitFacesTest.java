@@ -22,44 +22,17 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.notNullValue;
 import static org.junit.Assert.assertThat;
 
-import java.io.IOException;
-
-import org.junit.Before;
-import org.junit.Rule;
 import org.junit.Test;
-import org.junit.rules.ExpectedException;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Cookie;
 import org.openqa.selenium.NoSuchElementException;
-import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.htmlunit.HtmlUnitDriver;
 
 public class HtmlUnitFacesTest extends AbstractHtmlUnitContainerTest {
     
-    private WebDriver webDriver = new HtmlUnitDriver();
-    
-    @Rule
-    public ExpectedException thrown = ExpectedException.none();
-
-    @Before
-    public void logOut() throws IOException {
-        // Make sure we are logged out
-        webDriver.get(getBaseUri());
-        try {
-            webDriver.findElement(By.partialLinkText("Log out")).click();
-        }
-        catch (NoSuchElementException e) {
-            //Ignore
-        }
-    }
-
     @Test
     public void logIn() {
-
-        webDriver.get(getBaseUri() + "login.jsf");
-        webDriver.findElement(By.name("login:username")).sendKeys("root");
-        webDriver.findElement(By.name("login:password")).sendKeys("secret");
-        webDriver.findElement(By.name("login:submit")).click();
+        logIn("root", "secret");
 
         // This'll throw an expection if not logged in
         webDriver.findElement(By.partialLinkText("Log out"));

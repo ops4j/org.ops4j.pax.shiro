@@ -20,6 +20,7 @@ package org.ops4j.pax.shiro.test;
 
 import static org.junit.Assert.assertTrue;
 
+import java.io.IOException;
 import java.net.BindException;
 import java.util.Arrays;
 
@@ -27,7 +28,14 @@ import org.eclipse.jetty.server.Connector;
 import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.server.nio.SelectChannelConnector;
 import org.eclipse.jetty.webapp.WebAppContext;
+import org.junit.Before;
 import org.junit.BeforeClass;
+import org.junit.Rule;
+import org.junit.rules.ExpectedException;
+import org.openqa.selenium.By;
+import org.openqa.selenium.NoSuchElementException;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.htmlunit.HtmlUnitDriver;
 
 public abstract class AbstractHtmlUnitContainerTest {
 
@@ -36,6 +44,23 @@ public abstract class AbstractHtmlUnitContainerTest {
     protected static PauseableServer server;
 
     private static int port = 9180;
+
+    protected WebDriver webDriver = new HtmlUnitDriver();
+    
+    @Rule
+    public ExpectedException thrown = ExpectedException.none();
+
+    @Before
+    public void logOut() throws IOException {
+        // Make sure we are logged out
+        webDriver.get(getBaseUri());
+        try {
+            webDriver.findElement(By.partialLinkText("Log out")).click();
+        }
+        catch (NoSuchElementException e) {
+            //Ignore
+        }
+    }
 
     @BeforeClass
     public static void startContainer() throws Exception {
@@ -91,5 +116,12 @@ public abstract class AbstractHtmlUnitContainerTest {
             catch (Exception e) {
             }
         }
+    }
+    
+    protected void logIn(String username, String password) {
+        webDriver.get(getBaseUri() + "login.jsf");
+        webDriver.findElement(By.name("login:username")).sendKeys(username);
+        webDriver.findElement(By.name("login:password")).sendKeys(password);
+        webDriver.findElement(By.name("login:submit")).click();        
     }
 }

@@ -1,0 +1,63 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:shiro="http://shiro.ops4j.org/tags"
+	xmlns:l="http://java.sun.com/jsf/composite/layout"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+<h:head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<title>Pax Shiro Role Test</title>
+	<h:outputStylesheet name="style.css" />
+</h:head>
+
+<h:body>
+
+	<shiro:hasRole name="admin">
+		<p class="hasRole">
+			<shiro:principal />
+			has role admin.
+		</p>
+	</shiro:hasRole>
+
+	<shiro:lacksRole name="admin">
+		<p class="lacksRole">
+			<shiro:principal />
+			lacks role admin.
+		</p>
+	</shiro:lacksRole>
+
+	<shiro:hasAnyRoles name="goodguy,darklord">
+		<p class="hasAnyRole">
+			<shiro:principal />
+			has role goodguy or darklord.
+		</p>
+	</shiro:hasAnyRoles>
+
+	<l:page>
+		<shiro:hasRole name="admin">
+			<p class="hasRoleComposite">
+				<shiro:principal />
+				has role admin.
+			</p>
+		</shiro:hasRole>
+
+		<shiro:lacksRole name="admin">
+			<p class="lacksRoleComposite">
+				<shiro:principal />
+				lacks role admin.
+			</p>
+		</shiro:lacksRole>
+
+		<shiro:hasAnyRoles name="goodguy,darklord">
+			<p class="hasAnyRoleComposite">
+				<shiro:principal />
+				has role goodguy or darklord.
+			</p>
+		</shiro:hasAnyRoles>
+
+	</l:page>
+
+
+</h:body>
+</html>
