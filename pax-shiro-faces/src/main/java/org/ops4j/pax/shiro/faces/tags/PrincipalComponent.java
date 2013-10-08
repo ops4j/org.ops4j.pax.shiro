@@ -42,26 +42,23 @@ import org.apache.shiro.subject.PrincipalCollection;
 @FacesComponent("org.ops4j.pax.shiro.component.Principal")
 public class PrincipalComponent extends ShiroOutputComponent {
 
-    /**
-     * The type of principal to be retrieved, or null if the default principal should be used.
-     */
-    private String type;
-
-    /**
-     * The property name to retrieve of the principal, or null if the <tt>toString()</tt> value
-     * should be used.
-     */
-    private String property;
-
-    /**
-     * The default value that should be displayed if the user is not authenticated, or no principal
-     * is found.
-     */
-    private String defaultValue;
-    
     enum PropertyKeys {
+
+        /**
+         * The type of principal to be retrieved, or null if the default principal should be used.
+         */
         type,
+
+        /**
+         * The property name to retrieve of the principal, or null if the {@code toString()} value
+         * should be used.
+         */
         property,
+
+        /**
+         * The default value that should be displayed if the user is not authenticated, or no principal
+         * is found.
+         */
         defaultValue;
     }
 
@@ -97,7 +94,7 @@ public class PrincipalComponent extends ShiroOutputComponent {
             // Get the principal to print out
             Object principal;
 
-            if (type == null) {
+            if (getType() == null) {
                 principal = getSubject().getPrincipal();
             }
             else {
@@ -106,17 +103,17 @@ public class PrincipalComponent extends ShiroOutputComponent {
 
             // Get the string value of the principal
             if (principal != null) {
-                if (property == null) {
+                if (getProperty() == null) {
                     strValue = principal.toString();
                 }
                 else {
-                    strValue = getPrincipalProperty(principal, property);
+                    strValue = getPrincipalProperty(principal, getProperty());
                 }
             }
         }
 
         if (strValue == null) {
-            strValue = defaultValue;
+            strValue = getDefaultValue();
         }
         return strValue;
     }
@@ -125,14 +122,14 @@ public class PrincipalComponent extends ShiroOutputComponent {
         Object principal = null;
 
         try {
-            Class<?> cls = Class.forName(type);
+            Class<?> cls = Class.forName(getType());
             PrincipalCollection principals = getSubject().getPrincipals();
             if (principals != null) {
                 principal = principals.oneByType(cls);
             }
         }
         catch (ClassNotFoundException e) {
-            log.error("Unable to find class for name [" + type + "]");
+            log.error("Unable to find class for name [" + getType() + "]");
         }
         return principal;
     }
