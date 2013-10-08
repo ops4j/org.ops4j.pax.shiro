@@ -18,24 +18,20 @@
 
 package org.ops4j.pax.shiro.faces.tags;
 
-import javax.faces.component.UIOutput;
-
-import org.apache.shiro.SecurityUtils;
-import org.apache.shiro.subject.Subject;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import javax.faces.component.FacesComponent;
 
 /**
- * Base class for JSF components.
+ * Tag that renders the tag body if the current user <em>is not</em> known to the system, either because they
+ * haven't logged in yet, or because they have no 'RememberMe' identity.
  *
- * <p>NOTE: Your subclass is responsible for saving the state of the component. See {@link org.ops4j.pax.shiro.faces.tags.PrincipalTag}'s
- * StateHolder Methods for an exemple.
+ * <p>The logically opposite tag of this one is the {@link UserTag}.  Please read that class's JavaDoc as it explains
+ * more about the differences between Authenticated/Unauthenticated and User/Guest semantic differences.
  */
-public abstract class SecureComponent extends UIOutput {
-
-    protected final Logger log = LoggerFactory.getLogger(this.getClass());
-
-    protected Subject getSubject() {
-        return SecurityUtils.getSubject();
+@FacesComponent("org.ops4j.pax.shiro.component.Guest")
+public class GuestComponent extends ShiroComponent {
+    
+    @Override
+    public boolean isRendered() {
+        return !isUser();
     }
 }

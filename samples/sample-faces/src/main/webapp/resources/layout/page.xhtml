@@ -1,0 +1,16 @@
+<ui:component
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:cc="http://java.sun.com/jsf/composite">
+  <cc:interface>
+  </cc:interface>
+
+  <cc:implementation>
+
+    <h:panelGroup styleClass="layoutContainer" layout="block" rendered="#{cc.attrs.rendered}">
+      <cc:insertChildren/>
+    </h:panelGroup>
+
+  </cc:implementation>
+</ui:component>

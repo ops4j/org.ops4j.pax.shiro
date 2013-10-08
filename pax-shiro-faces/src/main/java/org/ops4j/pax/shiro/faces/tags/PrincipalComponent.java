@@ -25,7 +25,6 @@ import java.beans.PropertyDescriptor;
 import java.lang.reflect.Modifier;
 
 import javax.faces.component.FacesComponent;
-import javax.faces.context.FacesContext;
 
 import org.apache.shiro.ShiroException;
 import org.apache.shiro.subject.PrincipalCollection;
@@ -41,7 +40,7 @@ import org.apache.shiro.subject.PrincipalCollection;
  * authenticated, the tag displays nothing unless a {@code defaultValue} is specified.
  */
 @FacesComponent("org.ops4j.pax.shiro.component.Principal")
-public class PrincipalTag extends SecureComponent {
+public class PrincipalComponent extends ShiroOutputComponent {
 
     /**
      * The type of principal to be retrieved, or null if the default principal should be used.
@@ -59,31 +58,35 @@ public class PrincipalTag extends SecureComponent {
      * is found.
      */
     private String defaultValue;
-
-    private Object[] values;
     
+    enum PropertyKeys {
+        type,
+        property,
+        defaultValue;
+    }
+
     public String getType() {
-        return type;
+        return (String) getStateHelper().eval(PropertyKeys.type);
     }
 
     public void setType(String type) {
-        this.type = type;
+        getStateHelper().put(PropertyKeys.type, type);
     }
 
     public String getProperty() {
-        return property;
+        return (String) getStateHelper().eval(PropertyKeys.property);
     }
 
     public void setProperty(String property) {
-        this.property = property;
+        getStateHelper().put(PropertyKeys.property, property);
     }
 
     public String getDefaultValue() {
-        return defaultValue;
+        return (String) getStateHelper().eval(PropertyKeys.defaultValue);
     }
 
     public void setDefaultValue(String defaultValue) {
-        this.defaultValue = defaultValue;
+        getStateHelper().put(PropertyKeys.defaultValue, defaultValue);
     }
     
     @Override
@@ -117,6 +120,7 @@ public class PrincipalTag extends SecureComponent {
         }
         return strValue;
     }
+    
     private Object getPrincipalFromClassName() {
         Object principal = null;
 
@@ -171,27 +175,5 @@ public class PrincipalTag extends SecureComponent {
             throw new ShiroException(message);
         }
         return strValue;
-    }
-
-    @Override
-    public Object saveState(FacesContext context) {
-        if (values == null) {
-            values = new Object[4];
-        }
-        values[0] = super.saveState(context);
-        values[1] = type;
-        values[2] = property;
-        values[3] = defaultValue;
-
-        return values;
-    }
-
-    @Override
-    public void restoreState(FacesContext context, Object state) {
-        values = (Object[]) state;
-        super.restoreState(context, values[0]);
-        type = (String) values[1];
-        property = (String) values[2];
-        defaultValue = (String) values[3];
     }
 }

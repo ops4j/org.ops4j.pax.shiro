@@ -18,7 +18,7 @@
 
 package org.ops4j.pax.shiro.faces.tags;
 
-import javax.faces.view.facelets.TagConfig;
+import javax.faces.component.FacesComponent;
 
 /**
  * Tag that renders the tag body only if the current user has executed a <b>successful</b> authentication attempt
@@ -31,18 +31,11 @@ import javax.faces.view.facelets.TagConfig;
  * <p/>
  * The logically opposite tag of this one is the {@link NotAuthenticatedTag}
  */
-public class AuthenticatedTag extends SecureTagHandler {
-
-    public AuthenticatedTag(TagConfig config) {
-        super(config);
-    }
+@FacesComponent("org.ops4j.pax.shiro.component.Authenticated")
+public class NotAuthenticatedComponent extends ShiroComponent {
 
     @Override
-    protected boolean showTagBody() {
+    public boolean isRendered() {
         return isAuthenticated();
-    }
-
-    protected boolean isAuthenticated() {
-        return getSubject() != null && getSubject().isAuthenticated();
     }
 }

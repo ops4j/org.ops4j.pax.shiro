@@ -17,11 +17,66 @@
               xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
               xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-facesconfig_2_0.xsd"
               version="2.0"
-              metadata-complete="false">
+              metadata-complete="true">
     
     <component>
+        <component-type>org.ops4j.pax.shiro.component.Authenticated</component-type>
+        <component-class>org.ops4j.pax.shiro.faces.tags.AuthenticatedComponent</component-class>
+    </component>
+                  
+    <component>
+        <component-type>org.ops4j.pax.shiro.component.Guest</component-type>
+        <component-class>org.ops4j.pax.shiro.faces.tags.GuestComponent</component-class>
+    </component>
+                  
+    <component>
+        <component-type>org.ops4j.pax.shiro.component.HasAnyPermissions</component-type>
+        <component-class>org.ops4j.pax.shiro.faces.tags.HasAnyPermissionsComponent</component-class>
+    </component>
+                  
+    <component>
+        <component-type>org.ops4j.pax.shiro.component.HasAnyRoles</component-type>
+        <component-class>org.ops4j.pax.shiro.faces.tags.HasAnyRolesComponent</component-class>
+    </component>
+                  
+    <component>
+        <component-type>org.ops4j.pax.shiro.component.HasPermission</component-type>
+        <component-class>org.ops4j.pax.shiro.faces.tags.HasPermissionComponent</component-class>
+    </component>
+                  
+    <component>
+        <component-type>org.ops4j.pax.shiro.component.HasRole</component-type>
+        <component-class>org.ops4j.pax.shiro.faces.tags.HasRoleComponent</component-class>
+    </component>
+                  
+    <component>
+        <component-type>org.ops4j.pax.shiro.component.LacksPermission</component-type>
+        <component-class>org.ops4j.pax.shiro.faces.tags.LacksPermissionComponent</component-class>
+    </component>
+                  
+    <component>
+        <component-type>org.ops4j.pax.shiro.component.LacksRole</component-type>
+        <component-class>org.ops4j.pax.shiro.faces.tags.LacksRoleComponent</component-class>
+    </component>
+                  
+    <component>
+        <component-type>org.ops4j.pax.shiro.component.NotAuthenticated</component-type>
+        <component-class>org.ops4j.pax.shiro.faces.tags.NotAuthenticatedComponent</component-class>
+    </component>
+                  
+    <component>
         <component-type>org.ops4j.pax.shiro.component.Principal</component-type>
-        <component-class>org.ops4j.pax.shiro.faces.tags.PrincipalTag</component-class>
+        <component-class>org.ops4j.pax.shiro.faces.tags.PrincipalComponent</component-class>
+    </component>
+                  
+    <component>
+        <component-type>org.ops4j.pax.shiro.component.Remembered</component-type>
+        <component-class>org.ops4j.pax.shiro.faces.tags.RememberedComponent</component-class>
+    </component>
+                  
+    <component>
+        <component-type>org.ops4j.pax.shiro.component.User</component-type>
+        <component-class>org.ops4j.pax.shiro.faces.tags.UserComponent</component-class>
     </component>
                   
 </faces-config>

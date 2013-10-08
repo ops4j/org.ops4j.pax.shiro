@@ -18,16 +18,22 @@
 
 package org.ops4j.pax.shiro.faces.tags;
 
-import javax.faces.view.facelets.TagConfig;
+import javax.faces.component.UIOutput;
 
-public class LacksRoleTag extends HasRoleTag {
+import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.subject.Subject;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
-    public LacksRoleTag(TagConfig config) {
-        super(config);
-    }
+/**
+ * Base class for Shiro output components.
+ *
+ */
+public abstract class ShiroOutputComponent extends UIOutput {
 
-    @Override
-    protected boolean showTagBody(String value) {
-        return !hasRole(value);
+    protected final Logger log = LoggerFactory.getLogger(this.getClass());
+
+    protected Subject getSubject() {
+        return SecurityUtils.getSubject();
     }
 }

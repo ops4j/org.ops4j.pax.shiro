@@ -18,27 +18,24 @@
 
 package org.ops4j.pax.shiro.faces.tags;
 
-import javax.faces.view.facelets.TagConfig;
+import javax.faces.component.FacesComponent;
 
 /**
  * Tag that renders the tag body only if the current user's identity (aka principals) is remembered from a
  * successful authentication during a previous session and the user has <b>not</b> executed a successful authentication
  * attempt during their current session.
  * <p/>
- * <b>Note:</b> This is <em>less</em> restrictive than the <code>AuthenticatedTag</code> since it only assumes
+ * <b>Note:</b> This is <em>less</em> restrictive than the <code>AuthenticatedComponent</code> since it only assumes
  * the user is who they say they are <em>via Remember Me services</em>, which
- * makes no guarantee the user is who they say they are.  The <code>AuthenticatedTag</code> however
+ * makes no guarantee the user is who they say they are.  The <code>AuthenticatedComponent</code> however
  * guarantees that the current user has logged in <em>during their current session</em>, proving they really are
  * who they say they are.
  */
-public class RememberedTag extends SecureTagHandler {
-
-    public RememberedTag(TagConfig config) {
-        super(config);
-    }
+@FacesComponent("org.ops4j.pax.shiro.component.Remembered")
+public class RememberedComponent extends ShiroComponent {
 
     @Override
-    protected boolean showTagBody() {
+    public boolean isRendered() {
         return getSubject() != null && getSubject().isRemembered();
     }
 }

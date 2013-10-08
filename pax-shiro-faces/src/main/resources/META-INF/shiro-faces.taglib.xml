@@ -27,7 +27,9 @@
             opposite to the 'guest' tag.
         </description>
         <tag-name>user</tag-name>
-        <handler-class>org.ops4j.pax.shiro.faces.tags.UserTag</handler-class>
+        <component>
+            <component-type>org.ops4j.pax.shiro.component.User</component-type>
+        </component>
     </tag>
 
     <tag>
@@ -36,7 +38,9 @@
             It is logically opposite to the 'notAuthenticated' tag.
         </description>
         <tag-name>authenticated</tag-name>
-        <handler-class>org.ops4j.pax.shiro.faces.tags.AuthenticatedTag</handler-class>
+        <component>
+            <component-type>org.ops4j.pax.shiro.component.Authenticated</component-type>
+        </component>
     </tag>
 
     <tag>
@@ -45,7 +49,9 @@
             opposite to the 'user' tag.
         </description>
         <tag-name>guest</tag-name>
-        <handler-class>org.ops4j.pax.shiro.faces.tags.GuestTag</handler-class>
+        <component>
+            <component-type>org.ops4j.pax.shiro.component.Guest</component-type>
+        </component>
     </tag>
 
     <tag>
@@ -53,7 +59,9 @@
             'has' (implies) any of the specified permissions (i.e the user has any of the specified abilities).
         </description>
         <tag-name>hasAnyPermissions</tag-name>
-        <handler-class>org.ops4j.pax.shiro.faces.tags.HasAnyPermissionsTag</handler-class>
+        <component>
+            <component-type>org.ops4j.pax.shiro.component.HasAnyPermissions</component-type>
+        </component>
         <attribute>
             <description>Comma-separated list of permissions</description>
             <name>name</name>
@@ -66,7 +74,9 @@
             comma-separated list of role names.
         </description>
         <tag-name>hasAnyRoles</tag-name>
-        <handler-class>org.ops4j.pax.shiro.faces.tags.HasAnyRolesTag</handler-class>
+        <component>
+            <component-type>org.ops4j.pax.shiro.component.HasAnyRoles</component-type>
+        </component>
         <attribute>
             <description>Comma-separated list of roles</description>
             <name>name</name>
@@ -79,7 +89,9 @@
             'has' (implies) the specified permission (i.e the user has the specified ability).
         </description>
         <tag-name>hasPermission</tag-name>
-        <handler-class>org.ops4j.pax.shiro.faces.tags.HasPermissionTag</handler-class>
+        <component>
+            <component-type>org.ops4j.pax.shiro.component.HasPermission</component-type>
+        </component>
         <attribute>
             <description>permission name</description>
             <name>name</name>
@@ -90,7 +102,9 @@
     <tag>
         <description>Displays body content only if the current user has the specified role.</description>
         <tag-name>hasRole</tag-name>
-        <handler-class>org.ops4j.pax.shiro.faces.tags.HasRoleTag</handler-class>
+        <component>
+          <component-type>org.ops4j.pax.shiro.component.HasRole</component-type>
+        </component>
         <attribute>
             <description>role name</description>
             <name>name</name>
@@ -103,7 +117,9 @@
             NOT have (not imply) the specified permission (i.e. the user lacks the specified ability)
         </description>
         <tag-name>lacksPermission</tag-name>
-        <handler-class>org.ops4j.pax.shiro.faces.tags.LacksPermissionTag</handler-class>
+        <component>
+            <component-type>org.ops4j.pax.shiro.component.LacksPermission</component-type>
+        </component>
         <attribute>
             <description>permission name</description>
             <name>name</name>
@@ -116,7 +132,9 @@
             (i.e. they explicitly lack the specified role)
         </description>
         <tag-name>lacksRole</tag-name>
-        <handler-class>org.ops4j.pax.shiro.faces.tags.LacksRoleTag</handler-class>
+        <component>
+          <component-type>org.ops4j.pax.shiro.component.LacksRole</component-type>
+        </component>
         <attribute>
             <description>role name</description>
             <name>name</name>
@@ -129,7 +147,9 @@
             _during their current session_. It is logically opposite to the 'authenticated' tag.
         </description>
         <tag-name>notAuthenticated</tag-name>
-        <handler-class>org.ops4j.pax.shiro.faces.tags.NotAuthenticatedTag</handler-class>
+        <component>
+            <component-type>org.ops4j.pax.shiro.component.NotAuthenticated</component-type>
+        </component>
     </tag>
 
     <tag>
@@ -138,7 +158,9 @@
             has _not_ executed a successful authentication attempt during their current session.
         </description>
         <tag-name>remembered</tag-name>
-        <handler-class>org.ops4j.pax.shiro.faces.tags.RememberedTag</handler-class>
+        <component>
+            <component-type>org.ops4j.pax.shiro.component.Remembered</component-type>
+        </component>
     </tag>
 
     <tag>
