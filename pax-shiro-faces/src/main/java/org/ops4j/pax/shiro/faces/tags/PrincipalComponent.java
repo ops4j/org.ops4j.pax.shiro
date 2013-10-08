@@ -22,7 +22,6 @@ import java.beans.BeanInfo;
 import java.beans.IntrospectionException;
 import java.beans.Introspector;
 import java.beans.PropertyDescriptor;
-import java.lang.reflect.Modifier;
 
 import javax.faces.component.FacesComponent;
 
@@ -142,22 +141,13 @@ public class PrincipalComponent extends ShiroOutputComponent {
 
             // Loop through the properties to get the string value of the specified property
             for (PropertyDescriptor pd : bi.getPropertyDescriptors()) {
-                if (pd.getName().equals(_property)
-                    && (Modifier.isPublic(pd.getReadMethod().getModifiers()))) {
-                    Object value = null;
-                    try {
-                        pd.getReadMethod().setAccessible(true);
-                        value = pd.getReadMethod().invoke(principal, (Object[]) null);
-                    }
-                    finally {
-                        pd.getReadMethod().setAccessible(false);
-                    }
+                if (pd.getName().equals(_property)) {
+                    Object value = pd.getReadMethod().invoke(principal);
                     strValue = String.valueOf(value);
                     foundProperty = true;
                     break;
                 }
             }
-
         }
         catch (ReflectiveOperationException exc) {
             throw new ShiroException(exc);
