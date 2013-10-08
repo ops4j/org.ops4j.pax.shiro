@@ -1,4 +1,5 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>org.ops4j.pax</groupId>
@@ -20,6 +21,7 @@
         <pax.exam.version>3.2.0</pax.exam.version>
         <pax.swissbox.version>1.7.0</pax.swissbox.version>
         <pax.url.version>1.6.0</pax.url.version>
+        <selenium.version>2.35.0</selenium.version>
         <slf4j.version>1.7.5</slf4j.version>
         <pax.shiro.wiki.url>http://team.ops4j.org/wiki/display/paxshiro/</pax.shiro.wiki.url>
     </properties>
@@ -216,6 +218,19 @@
                 <groupId>commons-collections</groupId>
                 <artifactId>commons-collections</artifactId>
                 <version>3.2.1</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.seleniumhq.selenium</groupId>
+                <artifactId>selenium-htmlunit-driver</artifactId>
+                <version>${selenium.version}</version>
+                <scope>test</scope>
+                <exclusions>
+                    <exclusion>
+                        <groupId>org.eclipse.jetty</groupId>
+                        <artifactId>jetty-websocket</artifactId>
+                    </exclusion>
+                </exclusions>
             </dependency>
 
         </dependencies>
