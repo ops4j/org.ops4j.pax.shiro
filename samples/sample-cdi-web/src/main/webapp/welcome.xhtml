@@ -2,9 +2,12 @@
 <html xmlns="http://www.w3.org/1999/xhtml" 
       xmlns:ui="http://java.sun.com/jsf/facelets" 
       xmlns:h="http://java.sun.com/jsf/html" 
-      xmlns:f="http://java.sun.com/jsf/core">
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:shiro="http://shiro.ops4j.org/tags"
+      >
 
    <h1>Welcome to the Pax Shiro CDI Web Sample</h1>
    <p>You are now logged in as <em>#{subject.username}</em>.</p>
+   <p>Your display name is <shiro:principal property="displayName"/>.</p>
    <h:link value="Log out" outcome="logout"/>
 </html>

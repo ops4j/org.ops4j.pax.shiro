@@ -46,12 +46,13 @@ public class UserRepository {
 
     @PostConstruct
     public void init() {
-        createUser("admin", "secret");
-        createUser("user", "changeme");
+        createUser("admin", "secret", "Administrator");
+        createUser("user", "changeme", "Mary Smith");
     }
 
-    public void createUser(String username, String rawPassword) {
+    public void createUser(String username, String rawPassword, String displayName) {
         User user = new User(username, passwordService.encryptPassword(rawPassword));
+        user.setDisplayName(displayName);
         users.put(username, user);
     }
 

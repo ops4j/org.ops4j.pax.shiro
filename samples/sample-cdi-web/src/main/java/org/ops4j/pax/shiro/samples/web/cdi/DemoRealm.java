@@ -49,6 +49,6 @@ public class DemoRealm extends AuthenticatingRealm {
         if (user == null) {
             throw new AuthenticationException();
         }
-        return new SimpleAccount(user.getName(), user.getHashedPassword(), getName());
+        return new SimpleAccount(user, user.getHashedPassword(), getName());
     }
 }

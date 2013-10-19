@@ -19,6 +19,12 @@
         </dependency>
 
         <dependency>
+            <groupId>org.ops4j.pax.shiro</groupId>
+            <artifactId>pax-shiro-faces</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+
+        <dependency>
             <groupId>org.apache.geronimo.specs</groupId>
             <artifactId>geronimo-atinject_1.0_spec</artifactId>
         </dependency>

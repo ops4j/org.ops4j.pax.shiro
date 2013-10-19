@@ -34,6 +34,8 @@ public class User {
     
     private String hashedPassword;
     
+    private String displayName;
+    
     public User() {
     }
     
@@ -41,9 +43,6 @@ public class User {
         this.name = name;
         this.hashedPassword = hashedPassword;
     }
-    
-    
-
     
     /**
      * @return the name
@@ -74,5 +73,20 @@ public class User {
      */
     public void setHashedPassword(String hashedPassword) {
         this.hashedPassword = hashedPassword;
+    }
+
+    
+    public String getDisplayName() {
+        return displayName;
+    }
+
+    
+    public void setDisplayName(String displayName) {
+        this.displayName = displayName;
+    }
+    
+    @Override
+    public String toString() {
+        return name;
     }
 }
