@@ -25,11 +25,11 @@ import org.eclipse.jetty.osgi.boot.OSGiWebappConstants;
 import org.eclipse.jetty.osgi.boot.utils.internal.PackageAdminServiceTracker;
 import org.eclipse.jetty.util.resource.Resource;
 import org.eclipse.jetty.util.resource.ResourceCollection;
+import org.eclipse.jetty.webapp.AbstractConfiguration;
 import org.eclipse.jetty.webapp.WebAppContext;
-import org.eclipse.jetty.webapp.WebInfConfiguration;
 import org.osgi.framework.Bundle;
 
-public class OsgiJsfConfiguration extends WebInfConfiguration {
+public class OsgiJsfConfiguration extends AbstractConfiguration {
     
     private static final String CONFIG_FILES_KEY = "javax.faces.CONFIG_FILES";
     

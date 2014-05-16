@@ -1,0 +1,58 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:shiro="http://shiro.ops4j.org/tags"    
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	>
+<h:head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<title>Pax Shiro Faces Sample</title>
+	<h:outputStylesheet name="style.css"/>
+</h:head>
+
+<h:body>
+
+<h1>Pax Shiro Quickstart</h1>
+
+<p>Hi <shiro:guest>Guest</shiro:guest><shiro:user><shiro:principal/></shiro:user>!
+    ( <shiro:user><h:link outcome="logout">Log out</h:link></shiro:user>
+    <shiro:guest><h:link outcome="login">Log in</h:link> (sample accounts provided)</shiro:guest> )
+</p>
+
+<p>Welcome to the Pax Shiro Faces Quickstart sample application.
+    This page represents the home page of any web application.</p>
+
+<shiro:user><p>Visit your <h:link outcome="account/home">account page</h:link>.</p></shiro:user>
+<shiro:guest><p>If you want to access the user-only <h:link outcome="account/home">account page</h:link>,
+    you will need to log-in first.</p></shiro:guest>
+
+<h2>Roles</h2>
+
+<p>To show some taglibs, here are the roles you have and don't have. Log out and log back in under different user
+    accounts to see different roles.</p>
+
+<h3>Roles you have</h3>
+
+<p>
+    <shiro:hasRole name="admin">admin<br/></shiro:hasRole>
+    <shiro:hasRole name="president">president<br/></shiro:hasRole>
+    <shiro:hasRole name="darklord">darklord<br/></shiro:hasRole>
+    <shiro:hasRole name="goodguy">goodguy<br/></shiro:hasRole>
+    <shiro:hasRole name="schwartz">schwartz<br/></shiro:hasRole>
+</p>
+
+<h3>Roles you DON'T have</h3>
+
+<p>
+    <shiro:lacksRole name="admin">admin<br/></shiro:lacksRole>
+    <shiro:lacksRole name="president">president<br/></shiro:lacksRole>
+    <shiro:lacksRole name="darklord">darklord<br/></shiro:lacksRole>
+    <shiro:lacksRole name="goodguy">goodguy<br/></shiro:lacksRole>
+    <shiro:lacksRole name="schwartz">schwartz<br/></shiro:lacksRole>
+</p>
+
+
+
+</h:body>
+</html>

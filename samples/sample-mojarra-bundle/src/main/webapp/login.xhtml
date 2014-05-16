@@ -1,0 +1,101 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:shiro="http://shiro.ops4j.org/tags"    
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	>
+<h:head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<title>Pax Shiro Faces Sample </title>
+	<h:outputStylesheet name="style.css"/>
+</h:head>
+
+<h:body>
+
+
+
+<h2>Please Log in</h2>
+
+<shiro:guest>
+    <p>Here are a few sample accounts to play with in the default text-based Realm (used for this
+        demo and test installs only). Do you remember the movie these names came from? ;)</p>
+
+
+    <style type="text/css">
+        table.sample {
+            border-width: 1px;
+            border-style: outset;
+            border-color: blue;
+            border-collapse: separate;
+            background-color: rgb(255, 255, 240);
+        }
+
+        table.sample th {
+            border-width: 1px;
+            padding: 1px;
+            border-style: none;
+            border-color: blue;
+            background-color: rgb(255, 255, 240);
+        }
+
+        table.sample td {
+            border-width: 1px;
+            padding: 1px;
+            border-style: none;
+            border-color: blue;
+            background-color: rgb(255, 255, 240);
+        }
+    </style>
+
+
+    <table class="sample">
+        <thead>
+        <tr>
+            <th>Username</th>
+            <th>Password</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td>root</td>
+            <td>secret</td>
+        </tr>
+        <tr>
+            <td>presidentskroob</td>
+            <td>12345</td>
+        </tr>
+        <tr>
+            <td>darkhelmet</td>
+            <td>ludicrousspeed</td>
+        </tr>
+        <tr>
+            <td>lonestarr</td>
+            <td>vespa</td>
+        </tr>
+        </tbody>
+    </table>
+    <br/><br/>
+</shiro:guest>
+
+<h:form id="login">
+    <table align="left" border="0" cellspacing="0" cellpadding="3">
+        <tr>
+            <td>Username:</td>
+            <td><h:inputText id="username" maxlength="30"/></td>
+        </tr>
+        <tr>
+            <td>Password:</td>
+            <td><h:inputSecret id="password" maxlength="30"/></td>
+        </tr>
+        <tr>
+            <td colspan="2" align="left"><h:selectBooleanCheckbox id="rememberMe"/><font size="2">Remember Me</font></td>
+        </tr>
+        <tr>
+            <td colspan="2" align="right"><h:commandButton id="submit" value="Login"/></td>
+        </tr>
+    </table>
+</h:form>
+
+</h:body>
+</html>

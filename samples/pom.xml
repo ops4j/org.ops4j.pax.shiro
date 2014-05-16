@@ -15,5 +15,6 @@
       <module>sample-faces-bundle</module>
       <module>sample-jsp-bundle</module>
       <module>sample-jetty-osgi-boot-jsf</module>
+      <module>sample-mojarra-bundle</module>
   </modules>
 </project>
